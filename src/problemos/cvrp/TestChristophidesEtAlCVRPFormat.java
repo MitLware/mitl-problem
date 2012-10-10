@@ -1,10 +1,11 @@
-package cvrp;
+package problemos.cvrp;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import cvrp.ChristophidesEtAlCVRPFormat.CVRPProblemDescription;
+import problemos.cvrp.ChristophidesEtAlCVRPFormat.CVRPProblemDescription;
+
 
 //////////////////////////////////////////////////////////////////////
 

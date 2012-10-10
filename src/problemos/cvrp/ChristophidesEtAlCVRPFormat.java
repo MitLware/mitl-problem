@@ -20,7 +20,7 @@
 
 //////////////////////////////////////////////////////////////////////
 
-package cvrp;
+package problemos.cvrp;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;

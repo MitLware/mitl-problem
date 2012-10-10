@@ -1,4 +1,4 @@
-package sat;
+package problemos.sat;
 
 import java.util.ArrayList;
 import java.util.List;

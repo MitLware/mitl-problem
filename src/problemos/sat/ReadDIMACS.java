@@ -1,4 +1,4 @@
-package sat;
+package problemos.sat;
 
 import java.util.*; 
 import java.io.*; 
