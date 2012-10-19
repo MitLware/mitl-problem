@@ -1,12 +1,15 @@
 package problemos.sat;
 
 import java.util.*; 
+import java.util.logging.Logger;
 import java.io.*; 
 
 //////////////////////////////////////////////////////////////////////
 
 public final class ReadDIMACS 
-{ 
+{
+	private static Logger logger = Logger.getLogger( ReadDIMACS.class.getName() );
+	
 	public static CNF 
 	readDIMACS( InputStream is ) 
 	throws IOException 
@@ -25,8 +28,8 @@ public final class ReadDIMACS
 			String [] words = line.split("\\s+");
 			
 			for( int i=0; i<words.length; ++i )
-				System.out.print( words[ i ] + " " );
-			System.out.println( );			
+				logger.fine( words[ i ] + " " );
+			logger.fine( "\n" );			
 			
 			if( words[0].equals( "c" ) )
 				continue;
@@ -59,7 +62,7 @@ public final class ReadDIMACS
 
 			if( line.equals( "%" ) )
 			{
-				System.out.println( "[WARNING] not reading CNF file after '%'" );
+				logger.warning( "not reading CNF file after '%'" + line );
 				break;
 			}
 			else if( !line.equals( "" ) ) 
