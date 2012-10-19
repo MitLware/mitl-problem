@@ -62,7 +62,7 @@ public final class ReadDIMACS
 
 			if( line.equals( "%" ) )
 			{
-				logger.warning( "not reading CNF file after '%'" + line );
+				// logger.warning( "not reading CNF file after '%'" + line );
 				break;
 			}
 			else if( !line.equals( "" ) ) 
