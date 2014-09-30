@@ -9,9 +9,9 @@ import org.apache.commons.lang3.ArrayUtils;
 
 //////////////////////////////////////////////////////////////////////
 
-final class NPuzzleState {
+public final class NPuzzleState {
 	
-	enum Move { left, right, up, down };
+	enum Move { LEFT, RIGHT, UP, DOWN };
 
 	private	int []	state_;
 
@@ -83,28 +83,28 @@ final class NPuzzleState {
 		// boost::tie( blank_row, blank_column ) = get_blank_coords();
 		RowAndCol blankRowAndCol = get_blank_coords();
 
-	    if( op == Move.up )
+	    if( op == Move.UP )
 		{
 			// std::swap( get( blank_row - 1, blank_column ), get( blank_row, blank_column ) );
 	    	swap( state_, getIndex( blankRowAndCol.row - 1, blankRowAndCol.col ), 
 	    			getIndex( blankRowAndCol.row, blankRowAndCol.col ) );	    	
 			// --blank_row;
 		}
-		else if( op == Move.down )
+		else if( op == Move.DOWN )
 		{
 			// std::swap( get( blank_row + 1, blank_column ), get( blank_row, blank_column ) );
 			swap( state_, getIndex( blankRowAndCol.row + 1, blankRowAndCol.col ), 
 					getIndex( blankRowAndCol.row, blankRowAndCol.col ) );			
 			// ++blank_row;
 		}
-		else if( op == Move.right )
+		else if( op == Move.RIGHT )
 		{
 			// std::swap( get( blank_row, blank_column + 1 ), get( blank_row, blank_column ) );
 			swap( state_, getIndex( blankRowAndCol.row, blankRowAndCol.col + 1 ), 
 					getIndex( blankRowAndCol.row, blankRowAndCol.col ) );			
 			// ++blank_column;
 		}
-		else if( op == Move.left )
+		else if( op == Move.LEFT )
 		{
 			// std::swap( get( blank_row, blank_column - 1 ), get( blank_row, blank_column ) );
 			swap( state_, getIndex( blankRowAndCol.row, blankRowAndCol.col - 1 ), 
@@ -157,13 +157,13 @@ final class NPuzzleState {
 	{
 		RowAndCol rowAndCol = get_blank_coords();
 
-		if( op == Move.up )
+		if( op == Move.UP )
 			return rowAndCol.row > 0;
-		else if( op == Move.down )
+		else if( op == Move.DOWN )
 			return rowAndCol.row < size() - 1;
-		else if( op == Move.left )
+		else if( op == Move.LEFT )
 			return rowAndCol.col > 0;
-		else if( op == Move.right )
+		else if( op == Move.RIGHT )
 			return rowAndCol.col < size() - 1;
 		else
 			throw new IllegalArgumentException();
@@ -177,16 +177,16 @@ final class NPuzzleState {
 		RowAndCol rowAndCol = x.get_blank_coords();
 
 		if( rowAndCol.row > 0 )
-			result.add( Move.up );
+			result.add( Move.UP );
 
 		if( rowAndCol.row < x.size() - 1 )
-			result.add( Move.down );
+			result.add( Move.DOWN );
 
 		if( rowAndCol.col > 0 )
-			result.add( Move.left );
+			result.add( Move.LEFT );
 
 		if( rowAndCol.col < x.size() - 1 )
-			result.add( Move.right );
+			result.add( Move.RIGHT );
 			
 		return result;
 	}		
