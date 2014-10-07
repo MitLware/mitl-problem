@@ -1,11 +1,12 @@
 package problemos.npuzzle;
 
-import heu4j.Evaluate;
+import hyperion3.Evaluate;
+import hyperion3.value.Min;
 
 public final class NPuzzleHeuristicFns {
 
 	public static final class HammingDistance 
-	implements Evaluate< NPuzzleState, Integer > {
+	implements Evaluate< NPuzzleState, Min< Double > > {
 
 		private final NPuzzleState target;
 
@@ -18,23 +19,23 @@ public final class NPuzzleHeuristicFns {
 		///////////////////////////
 		
 		@Override
-		public Integer apply(NPuzzleState s) {
+		public Min< Double > apply(NPuzzleState s) {
 			if( s.size() != target.size() )
 				throw new IllegalArgumentException();
 			
-			int result = 0;
+			double result = 0.0;
 			for( int i=0; i<s.size(); ++i )
 				if( s.getTileAtIndex( i ) != target.getTileAtIndex( i ) )
 					++result;
 			
-			return result;
+			return new Min< Double >( result );
 		}
 	};
 	
 	///////////////////////////////
 
 	public static final class ManhattanDistance 
-	implements Evaluate< NPuzzleState, Integer > {
+	implements Evaluate< NPuzzleState, Min< Double > > {
 
 		private final NPuzzleState target;
 		private final NPuzzleState.RowAndCol [] targetCoords;
@@ -49,13 +50,13 @@ public final class NPuzzleHeuristicFns {
 		///////////////////////////
 		
 		@Override
-		public Integer apply(NPuzzleState s) {
+		public Min< Double > apply(NPuzzleState s) {
 			if( s.size() != target.size() )
 				throw new IllegalArgumentException();
 			
 	        NPuzzleState.RowAndCol [] sCoords = mapPermToCoords( s );
 	        
-	        int sum = 0;
+	        double sum = 0.0;
 	        // do not count the blank square.
 	        for( int i=1; i<sCoords.length; ++i )
 	        {
@@ -63,7 +64,7 @@ public final class NPuzzleHeuristicFns {
 	            sum += Math.abs( sCoords[i].col - targetCoords[i].col );
 	        }
 
-	        return sum;
+			return new Min< Double >( sum );
 	    }
 
 		///////////////////////////
