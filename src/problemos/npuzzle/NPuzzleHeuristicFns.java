@@ -1,7 +1,7 @@
 package problemos.npuzzle;
 
-import hyperion3.Evaluate;
-import hyperion3.value.Min;
+import shonan.notrace.Evaluate;
+import shonan.value.Min;
 
 public final class NPuzzleHeuristicFns {
 
@@ -29,6 +29,11 @@ public final class NPuzzleHeuristicFns {
 					++result;
 			
 			return new Min< Double >( result );
+		}
+
+		@Override
+		public Evaluate<NPuzzleState, Min<Double>> deepCopy() {
+			return this;
 		}
 	};
 	
@@ -77,6 +82,11 @@ public final class NPuzzleHeuristicFns {
 					result[ s.get_tile( row, col ) ] = new NPuzzleState.RowAndCol( row, col );
 		
 			return result;
+		}
+
+		@Override
+		public Evaluate<NPuzzleState, Min<Double>> deepCopy() {
+			return this;
 		}
 	}
 }
