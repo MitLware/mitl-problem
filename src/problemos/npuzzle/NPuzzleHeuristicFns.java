@@ -1,12 +1,15 @@
 package problemos.npuzzle;
 
-import shonan.notrace.Evaluate;
+import fj.P;
+import fj.P2;
+import shonan.Evaluate;
+import shonan.util.NoEnv;
 import shonan.value.Min;
 
 public final class NPuzzleHeuristicFns {
 
 	public static final class HammingDistance 
-	implements Evaluate< NPuzzleState, Min< Double > > {
+	implements Evaluate< NPuzzleState, Min< Double >, NoEnv > {
 
 		private final NPuzzleState target;
 
@@ -19,7 +22,7 @@ public final class NPuzzleHeuristicFns {
 		///////////////////////////
 		
 		@Override
-		public Min< Double > apply(NPuzzleState s) {
+		public Min< Double > apply(NPuzzleState s, NoEnv ignore ) {
 			if( s.size() != target.size() )
 				throw new IllegalArgumentException();
 			
@@ -31,16 +34,16 @@ public final class NPuzzleHeuristicFns {
 			return new Min< Double >( result );
 		}
 
-		@Override
-		public Evaluate<NPuzzleState, Min<Double>> deepCopy() {
-			return this;
-		}
+//		@Override
+//		public Evaluate<NPuzzleState, Min<Double>> deepCopy() {
+//			return this;
+//		}
 	};
 	
 	///////////////////////////////
 
 	public static final class ManhattanDistance 
-	implements Evaluate< NPuzzleState, Min< Double > > {
+	implements Evaluate< NPuzzleState, Min< Double >, NoEnv > {
 
 		private final NPuzzleState target;
 		private final NPuzzleState.RowAndCol [] targetCoords;
@@ -55,7 +58,7 @@ public final class NPuzzleHeuristicFns {
 		///////////////////////////
 		
 		@Override
-		public Min< Double > apply(NPuzzleState s) {
+		public Min< Double > apply(NPuzzleState s, NoEnv ignore ) {
 			if( s.size() != target.size() )
 				throw new IllegalArgumentException();
 			
@@ -84,10 +87,10 @@ public final class NPuzzleHeuristicFns {
 			return result;
 		}
 
-		@Override
-		public Evaluate<NPuzzleState, Min<Double>> deepCopy() {
-			return this;
-		}
+//		@Override
+//		public Evaluate<NPuzzleState, Min<Double>> deepCopy() {
+//			return this;
+//		}
 	}
 }
 
