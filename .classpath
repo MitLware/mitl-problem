@@ -4,11 +4,11 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry kind="lib" path="lib3rd/jeep.jar"/>
 	<classpathentry kind="lib" path="lib3rd/commons-lang3-3.1.jar"/>
-	<classpathentry kind="lib" path="lib3rd/statelet.jar"/>
 	<classpathentry kind="lib" path="lib3rd/functionaljava-4.2-beta-1.jar"/>
 	<classpathentry kind="lib" path="lib3rd/functionaljava-java8-4.2-beta-1.jar"/>
 	<classpathentry kind="lib" path="deploy/Problemos.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/ShonanComponents"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Statelet"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

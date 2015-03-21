@@ -3,7 +3,7 @@ package problemos.sat;
 import java.util.ArrayList;
 import java.util.List;
 
-import statelet.bitstring.BitString;
+import statelet.bitvector.BitVector;
 
 //////////////////////////////////////////////////////////////////////
 
@@ -29,7 +29,7 @@ public final class CNF
 		
 		///////////////////////////
 		
-		public boolean isSatisfied( BitString assignments )
+		public boolean isSatisfied( BitVector assignments )
 		{
 			boolean result = false;
 			for( int i=0; i<impl.length; ++i )
@@ -101,7 +101,7 @@ public final class CNF
 	
 	///////////////////////////////
 	
-	public boolean isSatisfied( BitString assignments )
+	public boolean isSatisfied( BitVector assignments )
 	{
 		if( assignments.length() != getNumVariables() )
 			throw new IllegalArgumentException();
@@ -113,7 +113,7 @@ public final class CNF
 		return true;
 	}
 	
-	public int numUnsatisfiedClauses( BitString assignments )
+	public int numUnsatisfiedClauses( BitVector assignments )
 	{
 		if( assignments.length() != getNumVariables() )
 			throw new IllegalArgumentException();

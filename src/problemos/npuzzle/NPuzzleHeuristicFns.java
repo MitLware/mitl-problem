@@ -22,7 +22,7 @@ public final class NPuzzleHeuristicFns {
 		///////////////////////////
 		
 		@Override
-		public Min< Double > apply(NPuzzleState s, NoEnv ignore ) {
+		public P2< Min< Double >, NoEnv > apply(NPuzzleState s, NoEnv ignore ) {
 			if( s.size() != target.size() )
 				throw new IllegalArgumentException();
 			
@@ -31,7 +31,7 @@ public final class NPuzzleHeuristicFns {
 				if( s.getTileAtIndex( i ) != target.getTileAtIndex( i ) )
 					++result;
 			
-			return new Min< Double >( result );
+			return P.p( new Min< Double >( result ), ignore );
 		}
 
 //		@Override
@@ -58,7 +58,7 @@ public final class NPuzzleHeuristicFns {
 		///////////////////////////
 		
 		@Override
-		public Min< Double > apply(NPuzzleState s, NoEnv ignore ) {
+		public P2< Min< Double >, NoEnv > apply(NPuzzleState s, NoEnv ignore ) {
 			if( s.size() != target.size() )
 				throw new IllegalArgumentException();
 			
@@ -72,7 +72,7 @@ public final class NPuzzleHeuristicFns {
 	            sum += Math.abs( sCoords[i].col - targetCoords[i].col );
 	        }
 
-			return new Min< Double >( sum );
+			return P.p( new Min< Double >( sum ), ignore );
 	    }
 
 		///////////////////////////
