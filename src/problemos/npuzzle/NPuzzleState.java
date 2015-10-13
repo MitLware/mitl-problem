@@ -123,7 +123,7 @@ public final class NPuzzleState {
 		return state_[ index ];		
 	}
 	
-	public int get_tile( int row, int col ) {
+	public int getTile( int row, int col ) {
 		assert( 0 <= row && row < size() );
 		assert( 0 <= col && col < size() );
 		return state_[ col + ( row * size() ) ];
@@ -210,7 +210,7 @@ public final class NPuzzleState {
 	            if( c == blankRowAndCol.col && r == blankRowAndCol.row )
 	            	s.append( '*' );
 	            else
-	            	s.append( get_tile( r, c ) );
+	            	s.append( getTile( r, c ) );
 	        }
 	        
 	        s.append( ']' );
