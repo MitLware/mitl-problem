@@ -3,20 +3,22 @@ package problemos.sat;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import statelet.bitvector.BitVector;
 
 //////////////////////////////////////////////////////////////////////
 
-public final class CNF
-{
-	public static final class Clause
-	{
+public final class CNF {
+	
+	public static final class Clause {
+		
 		private int [] impl;
 		
 		///////////////////////////
 		
-		public Clause( int [] clause )
-		{
+		public Clause( int [] clause ) {
 			if( !isValidClause( clause )  )
 				throw new IllegalArgumentException();
 			
@@ -29,8 +31,7 @@ public final class CNF
 		
 		///////////////////////////
 		
-		public boolean isSatisfied( BitVector assignments )
-		{
+		public boolean isSatisfied( BitVector assignments ) {
 			boolean result = false;
 			for( int i=0; i<impl.length; ++i )
 			{
@@ -44,8 +45,7 @@ public final class CNF
 			return result;
 		}
 		
-		public boolean isValidClause( int [] value )
-		{
+		public boolean isValidClause( int [] value ) {
 			for( int i=0; i<value.length; ++i )
 			{
 				if( value[ i ] == 0 )
@@ -59,19 +59,27 @@ public final class CNF
 			return true;
 		}
 		
-		public String toString()
-		{
+		///////////////////////////
+		
+		@Override		
+		public int hashCode() {
+			return HashCodeBuilder.reflectionHashCode( this );
+		}
+
+		@Override
+		public boolean equals( Object other ) {
+			return EqualsBuilder.reflectionEquals( this, other );
+		}
+		
+		@Override
+		public String toString() {
 			StringBuffer sb = new StringBuffer();
-			for( int i=0; i<impl.length; ++i )
-			{
+			for( int i=0; i<impl.length; ++i ) {
 				if( impl[ i ] > 0 )
-				{
 					sb.append( "v" + impl[ i ] );					
-				}
 				else
-				{
 					sb.append( "!v" + Math.abs( impl[ i ] ) );					
-				}
+
 				if( i < impl.length - 1 )
 					sb.append( " || " );
 			}
@@ -82,13 +90,12 @@ public final class CNF
 
 	///////////////////////////////
 	
-	private final int			numVariables;
-	private ArrayList< Clause >	clauses;
+	private final int		numVariables;
+	private List< Clause >	clauses;
 	
 	///////////////////////////////
 	
-	public CNF( int numVariables, List< Clause > clauses )
-	{
+	public CNF( int numVariables, List< Clause > clauses ) {
 		this.clauses = new ArrayList< Clause >( clauses );
 		this.numVariables = numVariables;
 	}
@@ -101,8 +108,7 @@ public final class CNF
 	
 	///////////////////////////////
 	
-	public boolean isSatisfied( BitVector assignments )
-	{
+	public boolean isSatisfied( BitVector assignments ) {
 		if( assignments.length() != getNumVariables() )
 			throw new IllegalArgumentException();
 		
@@ -113,8 +119,8 @@ public final class CNF
 		return true;
 	}
 	
-	public int numUnsatisfiedClauses( BitVector assignments )
-	{
+	public int numUnsatisfiedClauses( BitVector assignments ) {
+		
 		if( assignments.length() != getNumVariables() )
 			throw new IllegalArgumentException();
 		
@@ -127,9 +133,19 @@ public final class CNF
 	}
 	
 	///////////////////////////////	
+
+	@Override		
+	public int hashCode() {
+		return HashCodeBuilder.reflectionHashCode( this );
+	}
+
+	@Override
+	public boolean equals( Object other ) {
+		return EqualsBuilder.reflectionEquals( this, other );
+	}
 	
-	public String toString()
-	{
+	@Override
+	public String toString() {
 		StringBuffer sb = new StringBuffer(); 
 		for( int i=0; i<clauses.size(); ++i )
 		{

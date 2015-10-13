@@ -15,8 +15,7 @@ public final class NPuzzleState {
 
 	private	int []	state_;
 
-	private int getIndex( int row, int col ) 
-	{
+	private int getIndex( int row, int col ) {
 		assert( 0 <= row && row < size() );
 		assert( 0 <= col && col < size() );
 		return col + ( row * size() );
@@ -42,8 +41,7 @@ public final class NPuzzleState {
 	
 	///////////////////////////////	
 
-	public NPuzzleState( int size )
-	{
+	public NPuzzleState( int size ) {
 		if( size <= 0 )
 			throw new IllegalArgumentException();
 
@@ -55,9 +53,8 @@ public final class NPuzzleState {
 		assert( invariant() );
 	}
 
-	public NPuzzleState( int [] state )
-	{
-		if( state.length == 0 || !is_perfect_square( state.length ) )
+	public NPuzzleState( int [] state )	{
+		if( state.length == 0 || !isPerfectSquare( state.length ) )
 			throw new IllegalArgumentException();
 		if( !isPermutation( state ) )
 			throw new IllegalArgumentException();
@@ -72,40 +69,32 @@ public final class NPuzzleState {
 		assert( invariant() );
 	}
 	
-	private NPuzzleState( NPuzzleState parent, Move op )
-	{
-		assert( parent.is_valid_move( op ) );
+	private NPuzzleState( NPuzzleState parent, Move op ) {
+		assert( parent.isValidMove( op ) );
 		
 		state_ = parent.state_.clone();
-		
 
-		// int blank_row, blank_column;
-		// boost::tie( blank_row, blank_column ) = get_blank_coords();
-		RowAndCol blankRowAndCol = get_blank_coords();
+		RowAndCol blankRowAndCol = getBlankCoords();
 
-	    if( op == Move.UP )
-		{
+	    if( op == Move.UP ) {
 			// std::swap( get( blank_row - 1, blank_column ), get( blank_row, blank_column ) );
 	    	swap( state_, getIndex( blankRowAndCol.row - 1, blankRowAndCol.col ), 
 	    			getIndex( blankRowAndCol.row, blankRowAndCol.col ) );	    	
 			// --blank_row;
 		}
-		else if( op == Move.DOWN )
-		{
+		else if( op == Move.DOWN ) {
 			// std::swap( get( blank_row + 1, blank_column ), get( blank_row, blank_column ) );
 			swap( state_, getIndex( blankRowAndCol.row + 1, blankRowAndCol.col ), 
 					getIndex( blankRowAndCol.row, blankRowAndCol.col ) );			
 			// ++blank_row;
 		}
-		else if( op == Move.RIGHT )
-		{
+		else if( op == Move.RIGHT ) {
 			// std::swap( get( blank_row, blank_column + 1 ), get( blank_row, blank_column ) );
 			swap( state_, getIndex( blankRowAndCol.row, blankRowAndCol.col + 1 ), 
 					getIndex( blankRowAndCol.row, blankRowAndCol.col ) );			
 			// ++blank_column;
 		}
-		else if( op == Move.LEFT )
-		{
+		else if( op == Move.LEFT ) {
 			// std::swap( get( blank_row, blank_column - 1 ), get( blank_row, blank_column ) );
 			swap( state_, getIndex( blankRowAndCol.row, blankRowAndCol.col - 1 ), 
 					getIndex( blankRowAndCol.row, blankRowAndCol.col ) );
@@ -118,7 +107,7 @@ public final class NPuzzleState {
 	//////////////////////////////////
 	
 	public List< NPuzzleState > neighbors() {
-		List< Move > moves = valid_moves( this );
+		List< Move > moves = validMoves( this );
 		List< NPuzzleState > result = new ArrayList< NPuzzleState >();
 		for( Move m : moves )
 			result.add( new NPuzzleState( this, m )) ;
@@ -134,28 +123,24 @@ public final class NPuzzleState {
 		return state_[ index ];		
 	}
 	
-	public int get_tile( int row, int col )
-	{
+	public int get_tile( int row, int col ) {
 		assert( 0 <= row && row < size() );
 		assert( 0 <= col && col < size() );
 		return state_[ col + ( row * size() ) ];
 	}
 
-	private RowAndCol get_blank_coords()
-	{
-		return get_tile_coords( 0 );
+	private RowAndCol getBlankCoords() {
+		return getTileCoords( 0 );
 	}
 
-	private RowAndCol get_tile_coords( int value )
-	{
+	private RowAndCol getTileCoords( int value ) {
 		final int index = ArrayUtils.indexOf( state_, value );
 		assert( index != -1 );
 		return new RowAndCol( index / size(), index % size() );
 	}
 
-	private boolean is_valid_move( Move op )
-	{
-		RowAndCol rowAndCol = get_blank_coords();
+	private boolean isValidMove( Move op ) {
+		RowAndCol rowAndCol = getBlankCoords();
 
 		if( op == Move.UP )
 			return rowAndCol.row > 0;
@@ -169,12 +154,10 @@ public final class NPuzzleState {
 			throw new IllegalArgumentException();
 	}
 
-	private static List< Move > 
-	valid_moves( NPuzzleState x )
-	{
+	private static List< Move > validMoves( NPuzzleState x ) {
+		
 		List< Move > result = new ArrayList< Move >();
-
-		RowAndCol rowAndCol = x.get_blank_coords();
+		RowAndCol rowAndCol = x.getBlankCoords();
 
 		if( rowAndCol.row > 0 )
 			result.add( Move.UP );
@@ -213,11 +196,11 @@ public final class NPuzzleState {
 	}
 	
 	@Override
-	public String toString()
-	{
+	public String toString() {
+		
 		StringBuffer s = new StringBuffer();
 		s.append( '[' );
-		RowAndCol blankRowAndCol = get_blank_coords();
+		RowAndCol blankRowAndCol = getBlankCoords();
 	    for( int r=0; r<size(); ++r )    
 	    {
 	    	s.append( '[' );
@@ -236,19 +219,19 @@ public final class NPuzzleState {
 	    return s.append( ']').toString();
 	}
 	
-	public boolean invariant()
-	{
+	public boolean invariant() {
 		return size() * size() == state_.length
 			&& isPermutation( state_ );
 	}
 
-	private static boolean is_perfect_square( int x ) {
+	///////////////////////////////
+	
+	private static boolean isPerfectSquare( int x ) {
 		final int floorOfSqrt = (int)Math.floor( Math.sqrt( x ) ); 
 		return floorOfSqrt * floorOfSqrt == x;
 	}
 	
-	private static boolean isIdentityPermutation( int [] x )
-	{
+	private static boolean isIdentityPermutation( int [] x ) {
 		for( int i=0; i<x.length; ++i )
 			if( x[ i ] != i )
 				return false;
@@ -256,7 +239,7 @@ public final class NPuzzleState {
 		return true;
 	}
 	
-	public static boolean isPermutation( int ... perm ) {
+	private static boolean isPermutation( int ... perm ) {
 		
 		BitSet check = new BitSet( perm.length );
 		for( int i=0; i<perm.length; ++i ) {

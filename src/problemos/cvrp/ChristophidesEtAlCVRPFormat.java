@@ -63,7 +63,8 @@ public final class ChristophidesEtAlCVRPFormat {
 			final int xCoord = scanner.nextInt();
 			final int yCoord = scanner.nextInt();
 			coord = new Vec2( xCoord, yCoord );
-			quantity = scanner.nextInt(); 
+			quantity = scanner.nextInt();
+			scanner.close();
 		}
 		
 		///////////////////////////
@@ -118,11 +119,11 @@ public final class ChristophidesEtAlCVRPFormat {
 
 	///////////////////////////////
 	
-	public static CVRPProblemDescription read( InputStream in )
-	{
+	public static CVRPProblemDescription read( InputStream in ) {
+		
 		Scanner scanner = new Scanner( in );
-		try
-		{
+		try {
+			
 			String line = scanner.nextLine();
 			Scanner lineScanner = new Scanner( line );
 			// FIXME: potential resource leak...
@@ -133,25 +134,28 @@ public final class ChristophidesEtAlCVRPFormat {
 			final int dropTime = lineScanner.nextInt();
 		
 			line = scanner.nextLine();
+			lineScanner.close();
 			lineScanner = new Scanner( line );
 			final int depotXCoord = lineScanner.nextInt();
 			final int depotYCoord = lineScanner.nextInt();		
 			Vec2 depotCoord = new Vec2( depotXCoord, depotYCoord );
 		
 			List< Customer > customers = new ArrayList< Customer >();
-			for( int i=0; i<numCustomers; ++i )
-			{
+			for( int i=0; i<numCustomers; ++i ) {
 				line = scanner.nextLine();
 				customers.add( new Customer( line ) );
 			}
 		
+			lineScanner.close();
 			return new CVRPProblemDescription( vehicleCapacity, maximumRouteTime, dropTime,
 				depotCoord, customers );
 		}
-		catch( Exception ex )
-		{
+		catch( Exception ex ) {
 			scanner.close();
 			throw ex;
+		}
+		finally {
+			scanner.close();			
 		}
 	}
 

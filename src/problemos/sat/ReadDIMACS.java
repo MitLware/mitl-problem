@@ -6,14 +6,24 @@ import java.io.*;
 
 //////////////////////////////////////////////////////////////////////
 
-public final class ReadDIMACS 
-{
+public final class ReadDIMACS {
+	
 	private static Logger logger = Logger.getLogger( ReadDIMACS.class.getName() );
 	
+	///////////////////////////////
+	
+	public static final class BadDIMACSFormatException extends Exception {
+		
+		public BadDIMACSFormatException( String message ) { super(message); }
+		
+		private static final long serialVersionUID = -5775109281197015724L;
+	}
+
+	///////////////////////////////
+	
 	public static CNF 
-	readDIMACS( InputStream is ) 
-	throws IOException 
-	{ 
+	readDIMACS( InputStream is ) throws IOException, BadDIMACSFormatException	{
+		
 		BufferedReader in = new BufferedReader( new InputStreamReader( is ) ); 
 
 		int numVariables, numClauses;
@@ -36,10 +46,7 @@ public final class ReadDIMACS
 			else if( words[0].equals( "p" ) )
 			{ 
 				if( !words[1].equals("cnf") )
-				{
-					// System.err.println( "expect cnf after p" );
-					throw new IllegalArgumentException( "expect cnf after p" );					
-				}
+					throw new BadDIMACSFormatException( "expect cnf after p" );					
 
 				numVariables = Integer.parseInt( words[2] );
 				numClauses = Integer.parseInt( words[3] );
@@ -49,10 +56,10 @@ public final class ReadDIMACS
 
 		///////////////////////////
 		
-		ArrayList< CNF.Clause > clauses = new ArrayList< CNF.Clause >();
+		List< CNF.Clause > clauses = new ArrayList< CNF.Clause >();
 		
-		for( ; ; ) 
-		{ 
+		for( ; ; ) {
+			
 			String line = in.readLine(); 
 			if( line == null ) 
 				break;
@@ -60,31 +67,26 @@ public final class ReadDIMACS
 			line = line.trim(); 
 			String [] words = line.split("\\s+"); 
 
-			if( line.equals( "%" ) )
-			{
+			if( line.equals( "%" ) ) {
 				// logger.warning( "not reading CNF file after '%'" + line );
 				break;
 			}
-			else if( !line.equals( "" ) ) 
-			{
+			else if( !line.equals( "" ) ) {
+				
 				int [] clauseList = new int [ words.length - 1 ];
-				for( int j=0; j<words.length; ++j )
-				{ 
+				for( int j=0; j<words.length; ++j ) {
+					
 					int var = Integer.parseInt( words[j] ); 
 					if( var == 0 )
-					{ 
 						clauses.add( new CNF.Clause( clauseList ) );						
-					} 
 					else 
-					{
 						clauseList[ j ] = var;						
-					} 
 				} 
 			}
 		}
 		
 		if( clauses.size() != numClauses )
-			throw new IllegalArgumentException( "expected #clauses=" + numClauses  + ", found " + clauses.size() );
+			throw new BadDIMACSFormatException( "expected #clauses=" + numClauses  + ", found " + clauses.size() );
 		
 		return new CNF( numVariables, clauses );
 	} 
@@ -92,7 +94,7 @@ public final class ReadDIMACS
 	///////////////////////////////
 	
 	public static void main( String[] argv ) 
-	throws FileNotFoundException, IOException 
+	throws FileNotFoundException, IOException, BadDIMACSFormatException 
 	{ 
 		// String fileName = "resources/unif-c500-v250-s453695930.cnf";		
 		String fileName = "resources/simple_v3_c2.cnf";

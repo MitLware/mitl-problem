@@ -1,0 +1,11 @@
+NAME: unitTest
+TYPE: TSP
+COMMENT: 4 city problem for unit test (truncated kroA100)
+DIMENSION: 4
+EDGE_WEIGHT_TYPE : EUC_2D
+NODE_COORD_SECTION
+1 1380 939
+2 2848 96
+3 3510 1671
+4 457 334
+EOF
