@@ -80,12 +80,26 @@ public final class BitVectorProblems {
 	public static final class Checkerboard 
 	extends Evaluate.Directional< BitVector, Double > {
 		
-		private final BitVector pattern1;
-		private final BitVector pattern2;
+		//private final BitVector pattern1;
+		//private final BitVector pattern2;
+		private final int boardWidth;
 	
 		///////////////////////////////
 	
+		
+		/**
+		 * In Checkerboard problem (Baluja & Davies, 1997; Larranaga & Lozano, 2001), a s × s
+		 * grid is given where each grid can take value 0 or 1. The goal is to create a checkerboard
+		 * pattern of 0’s and 1’s on a n x n grid. i.e. each grid with a value 1 should be surrounded in
+		 * all four basic directions by a value of 0, and vice versa. The fitness function is the number
+		 * of bits in the (n-2)(n-2) grid, centered in the overall n x n grid, with the correct neighbours.
+		 * Let, x = [x_{ij}]_{i,j}=1,...s be the grid and d(a, b) be the
+		 * Kronecker delta function. Then the checkerboard function can be written as:
+		 * f(x) = 4(s - 2)^2 - \sum^{s-1}_{i=2}\sum^{s-1}_{j=2}
+		 * {d(x_{i,j}, x_{i-1,j}) + d(x_{i,j}, x_{i+1,j}) + d(x_{i,j}, x_{i,j-1}) + d(x_{i,j}, x_{i,j+1})}
+		 */
 		public Checkerboard( int n ) {
+			/*
 			StringBuffer s = new StringBuffer();
 			for( int i=0; i<n; ++i )
 				s.append( n % 2 == 0 ? '0' : '1' );
@@ -93,16 +107,49 @@ public final class BitVectorProblems {
 			pattern1 = BitVector.fromBinaryString( s.toString() );
 			pattern2 = pattern1.clone();
 			pattern2.not();
+			*/
+			boardWidth = (int)(Math.sqrt((double)n));
+	        
+	        // If "board" is not square, quit
+	        if ((boardWidth * boardWidth) != n) {
+	            throw new IllegalArgumentException("Not a square checkerboard");
+	        }
 		}
 
 		@Override
-		public SearchDirection direction() { return SearchDirection.MINIMIZING; }
+		public SearchDirection direction() { return SearchDirection.MAXIMIZING; }
 		
 		///////////////////////////////
 	
 		@Override
 		public Double apply( BitVector x ) {
-			return (double)Math.min( BitVector.HammingDistance( pattern1, x ), BitVector.HammingDistance( pattern2, x ) ); 
+			//return (double)Math.min( BitVector.HammingDistance( pattern1, x ), BitVector.HammingDistance( pattern2, x ) );
+			
+			if ((boardWidth * boardWidth) != x.length()) {
+	            throw new IllegalArgumentException();
+	        }
+			
+			// for each bit in the central (n-2)(n-2) grid, add 1 to fitness if the 4 neighbours are correct
+			int countCorrect = 0;
+			for (int row = 1; row < boardWidth - 1; row++) {
+	            for (int column = 1; column < boardWidth - 1; column++) {
+	            	int bitIndex = (row * boardWidth) + column;
+	            	if (x.get(bitIndex) != x.get(bitIndex - 1)) { // left
+	            		countCorrect++;
+	            	}
+	            	if (x.get(bitIndex) != x.get(bitIndex + 1)) { // left
+	            		countCorrect++;
+	            	}
+	            	if (x.get(bitIndex) != x.get(bitIndex - boardWidth)) { // left
+	            		countCorrect++;
+	            	}
+	            	if (x.get(bitIndex) != x.get(bitIndex + boardWidth)) { // left
+	            		countCorrect++;
+	            	}
+	            }
+	        }
+	        
+	        return (double)countCorrect / ((boardWidth-2) * (boardWidth-2) * 4); // latter is max value
 		}
 	}
 	
@@ -130,18 +177,69 @@ public final class BitVectorProblems {
 	public static final class Trap
 	extends Evaluate.Directional< BitVector, Integer > {
 
+		private final int blockSize;
+		private final int[] permutation;
+		
+		///////////////////////////////
+
+		public static final int DEFAULT_BLOCK_SIZE = 5;
+
+		public Trap(int n) {
+			this(n, DEFAULT_BLOCK_SIZE);
+		}
+		
+		public Trap(int n, int blockSize) {
+			if ((n % blockSize) != 0) {
+				throw new IllegalArgumentException();
+			}
+			
+			this.blockSize = blockSize;
+			this.permutation = new int[n];
+	        
+	        // Set the permutation
+	        // Option 1 - just in order
+	        for (int i = 0; i < permutation.length; ++i ) {
+	            permutation[i] = i;
+	        }
+		}
+		
 		@Override
 		public SearchDirection direction() { return SearchDirection.MAXIMIZING; }
 
 		@Override
 		public Integer apply( BitVector x ) {
-
+			/* global trap
 	        final int numZeroes = x.length() - x.cardinality();
 	        if( numZeroes == 0 )
 	        	return x.length() + 1;
 	        else
-	        	return numZeroes;        
+	        	return numZeroes;
+	        */
+			
+			if (x.length() != permutation.length) {
+				throw new IllegalArgumentException();
+			}
+			
+			// Now, step through the permutation, adding the trap score for each block of blockSize bits
+			int total = 0;
+			for (int i = 0; i < permutation.length; i += blockSize) {
+				StringBuffer s = new StringBuffer();
+				for (int j = 0; j < blockSize; j++) {
+					s.append(x.get(permutation[i + j]) ? '1' : '0');
+				}
+				total += trapScore(BitVector.fromBinaryString(s.toString()));
+			}
+			
+			return total;
 	    }
+		
+		private int trapScore( BitVector x ) {
+	        final int numZeroes = x.length() - x.cardinality();
+	        if( numZeroes == 0 )
+	        	return x.length() + 1;
+	        else
+	        	return numZeroes;
+		}
 	}
 
 	///////////////////////////////
