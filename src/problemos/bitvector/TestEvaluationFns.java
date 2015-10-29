@@ -132,6 +132,58 @@ public final class TestEvaluationFns {
 		assertEquals( 4, f.apply( BitVector.fromBinaryString( "0011100111" ) ), 0 );
 		assertEquals( 2, f.apply( BitVector.fromBinaryString( "0111101111" ) ), 0 );		
 	}
+	
+	///////////////////////////////
+	
+	@Test
+	public void testLeadingOnes() {
+		Evaluate.Directional< BitVector, Integer > f = new BitVectorProblems.LeadingOnes();
+		assertEquals( 0, f.apply( BitVector.fromBinaryString( "0000" ) ), 0 );
+		assertEquals( 1, f.apply( BitVector.fromBinaryString( "0001" ) ), 0 );
+		assertEquals( 2, f.apply( BitVector.fromBinaryString( "0011" ) ), 0 );
+		assertEquals( 3, f.apply( BitVector.fromBinaryString( "0111" ) ), 0 );
+		assertEquals( 4, f.apply( BitVector.fromBinaryString( "1111" ) ), 0 );
+		assertEquals( 0, f.apply( BitVector.fromBinaryString( "1110" ) ), 0 );
+		assertEquals( 0, f.apply( BitVector.fromBinaryString( "1100" ) ), 0 );
+		assertEquals( 0, f.apply( BitVector.fromBinaryString( "1000" ) ), 0 );
+		assertEquals( 1, f.apply( BitVector.fromBinaryString( "1001" ) ), 0 );
+
+		assertEquals( 0, f.apply( BitVector.fromBinaryString( "00000" ) ), 0 );
+		assertEquals( 1, f.apply( BitVector.fromBinaryString( "00001" ) ), 0 );
+		assertEquals( 2, f.apply( BitVector.fromBinaryString( "00011" ) ), 0 );
+		assertEquals( 3, f.apply( BitVector.fromBinaryString( "00111" ) ), 0 );
+		assertEquals( 4, f.apply( BitVector.fromBinaryString( "01111" ) ), 0 );
+		assertEquals( 5, f.apply( BitVector.fromBinaryString( "11111" ) ), 0 );
+		assertEquals( 0, f.apply( BitVector.fromBinaryString( "11110" ) ), 0 );
+		assertEquals( 0, f.apply( BitVector.fromBinaryString( "11100" ) ), 0 );
+		assertEquals( 0, f.apply( BitVector.fromBinaryString( "11000" ) ), 0 );
+		assertEquals( 0, f.apply( BitVector.fromBinaryString( "10000" ) ), 0 );
+		assertEquals( 1, f.apply( BitVector.fromBinaryString( "10001" ) ), 0 );
+	}
+	
+	///////////////////////////////
+	
+	@Test
+	public void testRoyalRoad() {
+		
+		Evaluate.Directional< BitVector, Double > f = new BitVectorProblems.RoyalRoad(5);
+		assertEquals( 10.0, f.apply( BitVector.fromBinaryString( "1111111111" ) ), 0.0 );
+		assertEquals( 5.0, f.apply( BitVector.fromBinaryString( "1111100000" ) ), 0.0 );
+		assertEquals( 5.0, f.apply( BitVector.fromBinaryString( "1111100001" ) ), 0.0 );
+		assertEquals( 5.0, f.apply( BitVector.fromBinaryString( "1111100011" ) ), 0.0 );
+		assertEquals( 5.0, f.apply( BitVector.fromBinaryString( "1111101111" ) ), 0.0 );
+		assertEquals( 0.0, f.apply( BitVector.fromBinaryString( "0000000000" ) ), 0.0 );
+		assertEquals( 0.0, f.apply( BitVector.fromBinaryString( "0000000001" ) ), 0.0 );
+		assertEquals( 0.0, f.apply( BitVector.fromBinaryString( "0000000011" ) ), 0.0 );
+		assertEquals( 0.0, f.apply( BitVector.fromBinaryString( "0000000111" ) ), 0.0 );
+		assertEquals( 0.0, f.apply( BitVector.fromBinaryString( "0000001111" ) ), 0.0 );
+		assertEquals( 5.0, f.apply( BitVector.fromBinaryString( "0000011111" ) ), 0.0 );
+		assertEquals( 0.0, f.apply( BitVector.fromBinaryString( "0000100000" ) ), 0.0 );
+		assertEquals( 0.0, f.apply( BitVector.fromBinaryString( "0001100000" ) ), 0.0 );
+		assertEquals( 0.0, f.apply( BitVector.fromBinaryString( "0011100000" ) ), 0.0 );
+		assertEquals( 0.0, f.apply( BitVector.fromBinaryString( "0111100000" ) ), 0.0 );
+		assertEquals( 5.0, f.apply( BitVector.fromBinaryString( "1111100000" ) ), 0.0 );	
+	}
 }
 
 // End ///////////////////////////////////////////////////////////////

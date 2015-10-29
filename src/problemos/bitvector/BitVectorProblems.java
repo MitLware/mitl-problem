@@ -168,8 +168,9 @@ public final class BitVectorProblems {
 		public Integer apply( BitVector x ) {
 
 			int numLeadingOnes = 0;
-			for( int i=0; i<x.length() && x.get( i ); ++i )
+			for( int i=0; i<x.length() && x.get( i ); ++i ) {
 				++numLeadingOnes;
+			}
 				
 	        return numLeadingOnes;        
 	    }
@@ -300,16 +301,13 @@ public final class BitVectorProblems {
 //	                System.out.print(permutation[i] + " ");
 	        
 	        // Now, step through the permutation, and count the number of 1's in each group
-	        int score = 0, curBlockCount = 0, curBlock = 0;
+	        int score = 0, curBlockCount = 0;
 	        for (int i = 0; i < x.length(); ++i )
-	        {
-	            curBlock = i / blockSize;
-	            boolean curBlockBit = (curBlock % 2) == 0;
-	            
+	        {	            
 	            // We count the number of bits with the wrong value. If there are none, then it's complete block
 	            // and we can add to the fitness
-	            // (Saves problems with last block if chromlength is no a multiple of blocksize)
-	            if (x.get(i) != curBlockBit)
+	            // (Saves problems with last block if chromlength is not a multiple of blocksize)
+	            if (!x.get(i))
 	                curBlockCount++;
 	            
 	            if (((i % blockSize) == (blockSize - 1)) || (i == (x.length() - 1))) // If at end of current block
@@ -322,8 +320,8 @@ public final class BitVectorProblems {
 	        
 	      //  theLastPermutation = permutation;
 	        
-	        // return (double)score;
-	        return (double)( x.length() - score ); 
+	        return (double)score;
+	        //return (double)( x.length() - score ); 
 	    }
 	}
 
