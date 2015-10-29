@@ -68,7 +68,7 @@ public final class BitVectorProblems {
 		public Integer apply( BitVector x ) {
         
             int numMirrored = 0;
-            for( int i=0; i<x.length()/2; ++i )
+            for( int i=0; i < Math.ceil(x.length()/2.0); ++i )
             	if( x.get(i) == x.get(x.length()-i - 1 ) )
             		++numMirrored;
             return numMirrored;        
@@ -93,6 +93,9 @@ public final class BitVectorProblems {
 		 * pattern of 0’s and 1’s on a n x n grid. i.e. each grid with a value 1 should be surrounded in
 		 * all four basic directions by a value of 0, and vice versa. The fitness function is the number
 		 * of bits in the (n-2)(n-2) grid, centered in the overall n x n grid, with the correct neighbours.
+		 * <p>
+		 * Here, we normalise the values to the range (0,1) inclusive
+		 * <p>
 		 * Let, x = [x_{ij}]_{i,j}=1,...s be the grid and d(a, b) be the
 		 * Kronecker delta function. Then the checkerboard function can be written as:
 		 * f(x) = 4(s - 2)^2 - \sum^{s-1}_{i=2}\sum^{s-1}_{j=2}
