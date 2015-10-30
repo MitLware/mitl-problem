@@ -330,12 +330,17 @@ public final class BitVectorProblems {
 	public static final class FourPeaks 
 	extends Evaluate.Directional< BitVector, Double > {
 		
-		private final int theT;
+		private final int t;
 		private final int reward;
 	    // private static final int DEFAULT_REWARD = 100;
 	    
+		/**
+		 * Baluja, S. & Caruana, R. (1995). Removing the genetics from the standard genetic algorithm,
+		 * Proceedings of the International Conference on Machine Learning, Morgan
+		 * Kaufmann Publishers, pp. 38–46.
+		 */
 	    public FourPeaks(int T, int reward ) {
-	        theT = T;
+	        this.t = T;
 	        this.reward = reward;
 	    }
 
@@ -346,7 +351,6 @@ public final class BitVectorProblems {
 		public Double apply( BitVector x) {
 	        
 	        int Zx = 0, Ox = 0; // Number of contiguous zeros and ones starting at position 100 and 0 respectively
-	        //int T = chrom.length / 10;//10; // parameter of the four peaks problem
 	        
 	        // number of contiguous 0s ending at position 100 (actually, the end position, whatever it is)
 	        for( int i=x.length() - 1; (i >= 0) && !x.get(i); --i )
@@ -356,13 +360,18 @@ public final class BitVectorProblems {
 	        for( int i = 0; i < x.length() && x.get(i); ++i )
 	            ++Ox;
 	        
-	        final int actualReward = (Zx > theT) && (Ox > theT) ? reward : 0;
-	        return (double)(x.length() + reward - theT) - ( Math.max(Zx, Ox) + actualReward );
+	        final int actualReward = (Zx > t) && (Ox > t) ? reward : 0;
+	        return (double)(Math.max(Zx, Ox) + actualReward);
 	    }
 	}
 	
 	///////////////////////////////
 	
+	/**
+	 * Watson, R. A., Hornby, G. S., and Pollack, J. B. (1998). Modeling building-block interdependency.
+	 * In Parallel Problem Solving from Nature - PPSN V International Conference,
+	 * pages 97–106, Amsterdam, The Netherlands. Springer Verlag. LNCS 1498.
+	 */
 	public static final class HIFF 
 	extends Evaluate.Directional< BitVector, Double > {
 

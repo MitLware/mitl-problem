@@ -63,8 +63,8 @@ public final class TestEvaluationFns {
 		assertEquals( 0.0, f.apply( BitVector.fromBinaryString( getPatternFromGridString(testStrings, numPatterns, gridSize, 2)) ), 0.0 );
 		assertEquals( 0.0, f.apply( BitVector.fromBinaryString( getPatternFromGridString(testStrings, numPatterns, gridSize, 3)) ), 0.0 );
 		assertEquals( 0.0, f.apply( BitVector.fromBinaryString( getPatternFromGridString(testStrings, numPatterns, gridSize, 4)) ), 0.0 );
-		assertEquals( (14.0 / 36.0), f.apply( BitVector.fromBinaryString( getPatternFromGridString(testStrings, numPatterns, gridSize, 5)) ), 0.0 );
-		assertEquals( (14.0 / 36.0), f.apply( BitVector.fromBinaryString( getPatternFromGridString(testStrings, numPatterns, gridSize, 6)) ), 0.0 );
+		assertEquals( (14.0 / 36.0), f.apply( BitVector.fromBinaryString( getPatternFromGridString(testStrings, numPatterns, gridSize, 5)) ), 1E-12 );
+		assertEquals( (14.0 / 36.0), f.apply( BitVector.fromBinaryString( getPatternFromGridString(testStrings, numPatterns, gridSize, 6)) ), 1E-12 );
 	}
 	
 	private static String getPatternFromGridString(String gridString, int numPatterns, int gridSize, int patternNum) {
@@ -183,6 +183,61 @@ public final class TestEvaluationFns {
 		assertEquals( 0.0, f.apply( BitVector.fromBinaryString( "0011100000" ) ), 0.0 );
 		assertEquals( 0.0, f.apply( BitVector.fromBinaryString( "0111100000" ) ), 0.0 );
 		assertEquals( 5.0, f.apply( BitVector.fromBinaryString( "1111100000" ) ), 0.0 );	
+		
+	}
+	
+	///////////////////////////////
+	
+	@Test
+	public void testFourPeaks() {
+		
+		Evaluate.Directional< BitVector, Double > f = new BitVectorProblems.FourPeaks(3, 100);
+		// global optima
+		assertEquals( 106.0, f.apply( BitVector.fromBinaryString( "0000001111" ) ), 0.0 );
+		assertEquals( 106.0, f.apply( BitVector.fromBinaryString( "0000111111" ) ), 0.0 );
+		
+		// local optima
+		assertEquals( 10.0, f.apply( BitVector.fromBinaryString( "1111111111" ) ), 0.0 );
+		assertEquals( 10.0, f.apply( BitVector.fromBinaryString( "0000000000" ) ), 0.0 );
+		
+		// non-optimal
+		assertEquals( 9.0,   f.apply( BitVector.fromBinaryString( "0000000001" ) ), 0.0 );
+		assertEquals( 8.0,   f.apply( BitVector.fromBinaryString( "0000000011" ) ), 0.0 );
+		assertEquals( 7.0,   f.apply( BitVector.fromBinaryString( "0000000111" ) ), 0.0 );
+		assertEquals( 105.0, f.apply( BitVector.fromBinaryString( "0000011111" ) ), 0.0 );
+		assertEquals( 7.0,   f.apply( BitVector.fromBinaryString( "0001111111" ) ), 0.0 );
+		assertEquals( 8.0,   f.apply( BitVector.fromBinaryString( "0011111111" ) ), 0.0 );
+		assertEquals( 9.0,   f.apply( BitVector.fromBinaryString( "0111111111" ) ), 0.0 );
+		assertEquals( 2.0, f.apply( BitVector.fromBinaryString( "1000101011" ) ), 0.0 );
+		assertEquals( 1.0, f.apply( BitVector.fromBinaryString( "0101100010" ) ), 0.0 );
+		assertEquals( 1.0, f.apply( BitVector.fromBinaryString( "1000000001" ) ), 0.0 );
+		assertEquals( 0.0, f.apply( BitVector.fromBinaryString( "1111111110" ) ), 0.0 );
+		assertEquals( 1.0, f.apply( BitVector.fromBinaryString( "0111111110" ) ), 0.0 );
+		assertEquals( 0.0, f.apply( BitVector.fromBinaryString( "1111100000" ) ), 0.0 );	
+		
+	}
+	
+	///////////////////////////////
+	
+	@Test
+	public void testHIFF() {
+		
+		Evaluate.Directional< BitVector, Double > f = new BitVectorProblems.HIFF();
+		
+		// global optima
+		assertEquals( 32.0, f.apply( BitVector.fromBinaryString( "00000000" ) ), 0.0 );
+		assertEquals( 32.0, f.apply( BitVector.fromBinaryString( "11111111" ) ), 0.0 );
+		
+		// non-optimal
+		assertEquals( 8.0, f.apply( BitVector.fromBinaryString( "10101010" ) ), 0.0 );
+		assertEquals( 8.0, f.apply( BitVector.fromBinaryString( "01010101" ) ), 0.0 );
+		assertEquals( 24.0, f.apply( BitVector.fromBinaryString( "11110000" ) ), 0.0 );
+		assertEquals( 12.0, f.apply( BitVector.fromBinaryString( "00010001" ) ), 0.0 );
+		assertEquals( 16.0, f.apply( BitVector.fromBinaryString( "00110011" ) ), 0.0 );
+		assertEquals( 8.0, f.apply( BitVector.fromBinaryString( "01011010" ) ), 0.0 );
+		assertEquals( 8.0, f.apply( BitVector.fromBinaryString( "01100110" ) ), 0.0 );
+		assertEquals( 12.0, f.apply( BitVector.fromBinaryString( "01111000" ) ), 0.0 );
+		
 	}
 }
 
