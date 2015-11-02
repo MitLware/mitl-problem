@@ -67,6 +67,10 @@ public final class ReadDIMACS {
 			line = line.trim(); 
 			String [] words = line.split("\\s+"); 
 
+			if( words[0].equals( "c" ) )
+				// ignore comments
+				continue;
+			
 			if( line.equals( "%" ) ) {
 				// logger.warning( "not reading CNF file after '%'" + line );
 				break;
@@ -99,6 +103,7 @@ public final class ReadDIMACS {
 		// String fileName = "resources/sat/unif-c500-v250-s453695930.cnf";		
 		String fileName = "resources/sat/simple_v3_c2.cnf";
 		CNF cnf = readDIMACS( ReadDIMACS.class.getResourceAsStream( fileName ) );
+		//CNF cnf = readDIMACS( new FileInputStream( fileName ) );
 		System.out.println( cnf );
 		System.out.println( "All done." );
 	} 

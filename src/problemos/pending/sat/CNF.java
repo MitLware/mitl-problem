@@ -3,14 +3,40 @@ package problemos.pending.sat;
 import java.util.ArrayList;
 import java.util.List;
 
+import jeep.util.Arrays;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.mitlware.SearchDirection;
+import org.mitlware.mutable.Evaluate;
 
 import statelet.bitvector.BitVector;
 
 //////////////////////////////////////////////////////////////////////
 
 public final class CNF {
+	
+	public static final class MAXSAT
+	extends Evaluate.Directional< BitVector, Double > {
+
+		private CNF impl;
+		
+		///////////////////////////
+		
+		public MAXSAT( CNF impl ) {
+			this.impl = impl;
+		}
+		
+		@Override
+		public SearchDirection direction() { return SearchDirection.MINIMIZING; }
+		
+		@Override
+		public Double apply( BitVector x ) {
+			return (double)impl.numUnsatisfiedClauses( x );
+		}
+	}
+	
+///////////////////////////
 	
 	public static final class Clause {
 		
@@ -20,7 +46,7 @@ public final class CNF {
 		
 		public Clause( int [] clause ) {
 			if( !isValidClause( clause )  )
-				throw new IllegalArgumentException();
+				throw new IllegalArgumentException("Invalid clause: " + java.util.Arrays.toString(clause));
 			
 			impl = new int [ clause.length ];
 			System.arraycopy( clause, 0, impl, 0, clause.length );
