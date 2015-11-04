@@ -53,9 +53,7 @@ public final class WindFarmProblem {
 				wfl.evaluate(layout);
 				result = wfl.getEnergyCost();
 			}
-			else {
-				result = Double.MAX_VALUE;
-			}
+
 			return result;
 		}
 
