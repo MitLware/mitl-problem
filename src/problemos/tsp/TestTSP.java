@@ -20,6 +20,8 @@ import jeep.math.Vec2;
 
 import org.junit.Test;
 
+import statelet.permutation.ArrayForm;
+
 //////////////////////////////////////////////////////////////////////
 
 public class TestTSP {
@@ -54,6 +56,18 @@ public class TestTSP {
 		}
 	}
 
+	@Test
+	public void testWi29() throws IOException, BadFormatException {
+
+		String path = System.getProperty( "user.dir" ) + "/resources/" + "wi29.tsp";		
+		InputStream is = new FileInputStream( path );
+		TSP tsp = new TSP.TSPLibInstance( is );
+		System.out.println( tsp );
+		
+		ArrayForm tour = new ArrayForm( 17, 16, 20, 21, 22, 28, 27, 25, 19, 24, 26, 23, 15, 13, 12, 8, 6, 2, 3, 7, 4, 0, 1, 5, 9, 10, 11, 14, 18 );
+		System.out.println( TSP.tourLength(tour,tsp.getDistanceFn()) );
+	}
+	
 	///////////////////////////////
 	
 	@Test

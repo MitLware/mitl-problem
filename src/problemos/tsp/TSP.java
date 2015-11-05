@@ -7,6 +7,7 @@ import java.util.function.BiFunction;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import statelet.permutation.ArrayForm;
 import jeep.lang.BadFormatException;
 import jeep.lang.UnsupportedFormatException;
 
@@ -18,6 +19,18 @@ public interface TSP {
 	public BiFunction< Integer, Integer, Double > getDistanceFn();
 	
 	///////////////////////////////
+	
+	public static double tourLength( ArrayForm tour, BiFunction< Integer, Integer, Double > distanceFn ) {
+		double sum = 0;
+		for( int i=1; i<tour.size(); ++i )
+			sum += distanceFn.apply( tour.get(i-1) + 1, tour.get(i) + 1 );
+		
+		// sum += distanceFn.apply( tour.get(tour.size()-1) + 1, tour.get(0) + 1 );
+		sum += distanceFn.apply( tour.get(0) + 1, tour.get(tour.size()-1) + 1 );		
+		return sum;
+	}
+	
+	///////////////////////////////	
 	
 	public static final class TSPLibInstance implements TSP {
 

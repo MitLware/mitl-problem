@@ -115,6 +115,7 @@ public final class TSPLibFormat {
 				return ( a, b ) -> {
 					@SuppressWarnings("unchecked")
 					Map< Integer, List< Double > > nodeCoords = (Map< Integer, List<Double>>)symbolTable.get( "NODE_COORD_SECTION");
+					
 					final List< Double > ac = nodeCoords.get( a );
 					final List< Double > bc = nodeCoords.get( b );
 					final double xd = ac.get(0) - bc.get(0);
