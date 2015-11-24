@@ -16,6 +16,10 @@ import statelet.bitvector.BitVector;
 
 public final class CNF {
 	
+	/**
+	 * In this implementation, the fitness is the number of unsatisfied clauses,
+	 * so the optima for every instance will have fitness 0
+	 */
 	public static final class MAXSAT
 	extends Evaluate.Directional< BitVector, Double > {
 
@@ -71,18 +75,42 @@ public final class CNF {
 			return result;
 		}
 		
-		public boolean isValidClause( int [] value ) {
+		public static boolean isValidClause( int [] value ) {
 			for( int i=0; i<value.length; ++i )
 			{
 				if( value[ i ] == 0 )
 					return false;
 				
+				/* contradictions are allowed (frequently appear in known unsatisfiable instances) - this has moved below
 				for( int j=i+1; j<value.length; ++j )
 					if( value[ j ] == -value[ i ] )
 						return false;
+				*/
 			}
 			
 			return true;
+		}
+		
+		/**@return true iff this contains a variable and its negation*/
+		public boolean isContradiction() {
+			for( int i=0; i<impl.length; ++i )
+				for( int j=i+1; j<impl.length; ++j )
+					if( impl[ j ] == -impl[ i ] )
+						return true;
+			
+			return false;
+		}
+		
+		/**has at most one positive variable*/
+		public boolean isHornClause() {
+			int positiveCount = 0;
+			for( int i=0; (positiveCount<=1) && (i<impl.length); ++i ) {
+				if (impl[i] > 0) {
+					positiveCount++;
+				}
+			}
+			
+			return positiveCount <= 1;
 		}
 		
 		///////////////////////////

@@ -1,8 +1,14 @@
 package problemos.pending.sat;
 
-import java.util.*; 
-import java.util.logging.Logger;
-import java.io.*; 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger; 
 
 //////////////////////////////////////////////////////////////////////
 
@@ -58,34 +64,48 @@ public final class ReadDIMACS {
 		
 		List< CNF.Clause > clauses = new ArrayList< CNF.Clause >();
 		
+		String incompleteLine = null; // the cnf format allows clauses to be split over multiple lines
 		for( ; ; ) {
 			
 			String line = in.readLine(); 
 			if( line == null ) 
 				break;
 			
-			line = line.trim(); 
-			String [] words = line.split("\\s+"); 
+			line = line.trim();
 
-			if( words[0].equals( "c" ) )
+			if( line.startsWith( "c" ) ) {
 				// ignore comments
 				continue;
-			
+			}
+
 			if( line.equals( "%" ) ) {
+				
 				// logger.warning( "not reading CNF file after '%'" + line );
 				break;
-			}
-			else if( !line.equals( "" ) ) {
 				
-				int [] clauseList = new int [ words.length - 1 ];
-				for( int j=0; j<words.length; ++j ) {
-					
-					int var = Integer.parseInt( words[j] ); 
-					if( var == 0 )
-						clauses.add( new CNF.Clause( clauseList ) );						
-					else 
-						clauseList[ j ] = var;						
-				} 
+			} else if( !line.equals( "" ) ) {
+				if (incompleteLine != null) {
+					line = incompleteLine + " " + line;
+					incompleteLine = null;
+				}
+				
+				String [] words = line.split("\\s+"); 
+	
+				if (words[words.length - 1].equals("0")) {
+					int [] clauseList = new int [ words.length - 1 ];
+				
+					if (clauseList.length > 0) { // not an empty line
+						for( int j=0; j<words.length; ++j ) {
+							int var = Integer.parseInt( words[j] ); 
+							if( var == 0 )
+								clauses.add( new CNF.Clause( clauseList ) );						
+							else 
+								clauseList[ j ] = var;
+						}
+					}
+				} else { // no "0" at the end of the line means that it wraps onto the next one
+					incompleteLine = line;
+				}
 			}
 		}
 		
