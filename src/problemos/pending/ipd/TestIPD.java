@@ -1,14 +1,15 @@
 package problemos.pending.ipd;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
 import org.junit.Test;
+import org.mitlware.mutable.Evaluate;
 
 import problemos.pending.ipd.IPD.Result;
-import problemos.pending.ipd.BasicPlayers.AxelrodBinaryEncodedPlayer;
 import statelet.bitvector.BitVector;
 
 public class TestIPD {
@@ -80,16 +81,96 @@ public class TestIPD {
 	@Test
 	public void test3() {
 		
+		System.out.println("3.1:");
+		
 		{
-			BitVector allC = BitVector.fromBinaryString( "0000" );
-			Player encoded = BasicPlayers.AxelrodBinaryEncodedPlayer.noPhantomMemory( allC );
+			BitVector allC = BitVector.fromBinaryString( "000000" );
+			Player encoded = BasicPlayers.AxelrodBinaryEncodedPlayer.phantomMemory( allC );
 			encodedEqualAgainstTFT( encoded, new BasicPlayers.AllC(), 10 );
-		} 
+		}
+		
+		System.out.println("3.2:");
+		
 		{
-			BitVector allD = BitVector.fromBinaryString( "1111" );
-			Player encoded = BasicPlayers.AxelrodBinaryEncodedPlayer.noPhantomMemory( allD );
+			BitVector allD = BitVector.fromBinaryString( "111111" );
+			Player encoded = BasicPlayers.AxelrodBinaryEncodedPlayer.phantomMemory( allD );
 			encodedEqualAgainstTFT( encoded, new BasicPlayers.AllD(), 10 );
-		} 
+		}
+		
+		System.out.println("3.3:");
+		
+		{
+			BitVector tft = BitVector.fromBinaryString( "110000" );
+			Player encoded = BasicPlayers.AxelrodBinaryEncodedPlayer.phantomMemory( tft );
+			encodedEqualAgainstTFT( encoded, new BasicPlayers.TFT(), 10 ); // NB - BasicPlayers.TFT
+		}
+		
+		System.out.println("3.4:");
+		
+		{
+			BitVector tft = BitVector.fromBinaryString( "00000000000000000000" );
+			Player encoded = BasicPlayers.AxelrodBinaryEncodedPlayer.phantomMemory( tft );
+			encodedEqualAgainstTFT( encoded, new BasicPlayers.AllC(), 10 ); // NB - BasicPlayers.TFT
+		}
+		
+		System.out.println("3.5:");
+		
+		{
+			BitVector tft = BitVector.fromBinaryString( "11111111111111111111" );
+			Player encoded = BasicPlayers.AxelrodBinaryEncodedPlayer.phantomMemory( tft );
+			encodedEqualAgainstTFT( encoded, new BasicPlayers.AllD(), 10 ); // NB - BasicPlayers.TFT
+		}
+		
+		System.out.println("3.6:");
+		
+		{
+			BitVector tft = BitVector.fromBinaryString( "11001100110011000000" );
+			Player encoded = BasicPlayers.AxelrodBinaryEncodedPlayer.phantomMemory( tft );
+			encodedEqualAgainstTFT( encoded, new BasicPlayers.TFT(), 10 ); // NB - BasicPlayers.TFT
+		}
+		
+		System.out.println();
+
+	}
+	
+
+	///////////////////////////////
+	
+	@Test
+	public void testAxelrodBinaryWithNoPhantomMemory() {
+		// this won't work with IPD.play() because the first round will fail
+		{
+			Player p1 = BasicPlayers.AxelrodBinaryEncodedPlayer.noPhantomMemory(BitVector.fromBinaryString("0000")); // always cooperate
+			Player p2 = BasicPlayers.AxelrodBinaryEncodedPlayer.noPhantomMemory(BitVector.fromBinaryString("1010")); // always cooperate (remember, BV is right-to-left)
+			assertEquals(Move.C, p1.move(Collections.singletonList(Move.C), Collections.singletonList(Move.C), null));
+			assertEquals(Move.C, p2.move(Collections.singletonList(Move.C), Collections.singletonList(Move.C), null));
+		}
+		
+		{
+			Player p3 = BasicPlayers.AxelrodBinaryEncodedPlayer.noPhantomMemory(BitVector.fromBinaryString("1111")); // always defect
+			Player p4 = BasicPlayers.AxelrodBinaryEncodedPlayer.noPhantomMemory(BitVector.fromBinaryString("0101")); // always defect
+			assertEquals(Move.D, p3.move(Collections.singletonList(Move.C), Collections.singletonList(Move.C), null));
+			assertEquals(Move.D, p4.move(Collections.singletonList(Move.C), Collections.singletonList(Move.C), null));
+		}
+		
+		{
+			Player p1 = BasicPlayers.AxelrodBinaryEncodedPlayer.noPhantomMemory(BitVector.fromBinaryString("1100")); // TFT
+			assertEquals(Move.D, p1.move(Collections.singletonList(Move.D), Collections.singletonList(Move.D), null));
+			assertEquals(Move.C, p1.move(Collections.singletonList(Move.C), Collections.singletonList(Move.C), null));
+		}
+	}
+
+
+	///////////////////////////////
+	
+	@Test
+	public void testIPDFitness() {
+		Payoff payoff = Payoff.defaultPayoff; 
+		Evaluate.Directional<BitVector, Double> ipd = new IPD.IPDProblem(new BasicPlayers.AllD(), payoff, 10);
+		
+		assertEquals(0, ipd.apply(BitVector.fromBinaryString( "000000" )).doubleValue(), 0); // all C
+		assertEquals(10, ipd.apply(BitVector.fromBinaryString( "111111" )).doubleValue(), 0); // all D
+		assertEquals(9, ipd.apply(BitVector.fromBinaryString( "110000" )).doubleValue(), 0); // TFT
 	}
 }
 

@@ -8,9 +8,39 @@ import java.util.Random;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.mitlware.SearchDirection;
+import org.mitlware.mutable.Evaluate;
+
+import problemos.pending.ipd.IPD.Result;
+import statelet.bitvector.BitVector;
 
 public final class IPD {
 
+	/**given a particular strategy for comparison, evaluate the given strategy against it*/
+	public static final class IPDProblem 
+	extends Evaluate.Directional< BitVector, Double > {
+
+		private final Player niche;
+		private final Payoff payoff;
+		private final int numRounds;
+		
+		public IPDProblem(Player niche, Payoff payoff, int numRounds) {
+			this.niche = niche;
+			this.payoff = payoff;
+			this.numRounds = numRounds;
+		}
+		
+		@Override
+		public SearchDirection direction() { return SearchDirection.MAXIMIZING; }
+		
+		@Override
+		public Double apply( BitVector x ) {
+			Result result = IPD.play( BasicPlayers.AxelrodBinaryEncodedPlayer.phantomMemory(x), niche, payoff, numRounds, null );
+			
+			return result.payoff1;
+		}
+	}
+	
 	public static final class Result {
 		
 		public final double payoff1;
