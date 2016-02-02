@@ -1,5 +1,7 @@
 package problemos.mkp;
 
-public class MKPSolution{
+import statelet.bitvector.BitVector;
 
+public class MKPSolution{
+	BitVector solution;
 }
