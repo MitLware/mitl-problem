@@ -33,6 +33,11 @@ public abstract class Constraint
 		}
 		
 		public int hashCode() { return roomId; }
+
+		@Override
+		public boolean isViolated(Timetable timetable, Model model) {
+			throw new UnsupportedOperationException("FIXME: Implement this"); // FIXME
+		}
 	}
 
 	///////////////////////////////
@@ -63,7 +68,12 @@ public abstract class Constraint
 				&& examId2 == rhs.examId2;
 		}
 	
-		public int hashCode() { return HashCode.apply( examId1, examId2 ); }		
+		public int hashCode() { return HashCode.apply( examId1, examId2 ); }
+
+		@Override
+		public boolean isViolated(Timetable timetable, Model model) {
+			throw new UnsupportedOperationException("FIXME: Implement this"); // FIXME
+		}		
 	}
 
 	public static final class Exclusion
@@ -136,7 +146,12 @@ public abstract class Constraint
 				&& examId2 == rhs.examId2;
 		}
 
-		public int hashCode() { return HashCode.apply( examId1, examId2 ); }		
+		public int hashCode() { return HashCode.apply( examId1, examId2 ); }
+
+		@Override
+		public boolean isViolated(Timetable timetable, Model model) {
+			throw new UnsupportedOperationException("FIXME: Implement this"); // FIXME
+		}		
 	}
 
 	///////////////////////////////	
@@ -166,6 +181,11 @@ public abstract class Constraint
 		}
 		
 		public int hashCode() { return penalty; }
+
+		@Override
+		public boolean isViolated(Timetable timetable, Model model) {
+			throw new UnsupportedOperationException("FIXME: Implement this"); // FIXME
+		}
 	};
 
 	public static final class TwoInADay
@@ -188,6 +208,11 @@ public abstract class Constraint
 		}
 		
 		public int hashCode() { return penalty; }
+
+		@Override
+		public boolean isViolated(Timetable timetable, Model model) {
+			throw new UnsupportedOperationException("FIXME: Implement this"); // FIXME
+		}
 	};
 
 	public static final class PeriodSpread
@@ -210,6 +235,11 @@ public abstract class Constraint
 		}
 		
 		public int hashCode() { return penalty; }
+
+		@Override
+		public boolean isViolated(Timetable timetable, Model model) {
+			throw new UnsupportedOperationException("FIXME: Implement this"); // FIXME
+		}
 	};
 
 	public static final class NonMixedDurations
@@ -232,6 +262,11 @@ public abstract class Constraint
 		}
 		
 		public int hashCode() { return penalty; }
+
+		@Override
+		public boolean isViolated(Timetable timetable, Model model) {
+			throw new UnsupportedOperationException("FIXME: Implement this"); // FIXME
+		}
 	};
 
 	public static final class FrontLoad
@@ -259,7 +294,12 @@ public abstract class Constraint
 				&& penalty == rhs.penalty; 
 		}
 
-		public int hashCode() { return HashCode.apply( numLargestExams, numLastPeriods, penalty ); }		
+		public int hashCode() { return HashCode.apply( numLargestExams, numLastPeriods, penalty ); }
+
+		@Override
+		public boolean isViolated(Timetable timetable, Model model) {
+			throw new UnsupportedOperationException("FIXME: Implement this"); // FIXME
+		}		
 	};
 
 	///////////////////////////////
