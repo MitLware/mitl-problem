@@ -23,23 +23,26 @@ public final class IPD {
 		private final Player niche;
 		private final Payoff payoff;
 		private final int numRounds;
+		private final Random random;
 		
-		public IPDProblem(Player niche, Payoff payoff, int numRounds) {
+		public IPDProblem(Player niche, Payoff payoff, int numRounds, Random random) {
+			super( SearchDirection.MAXIMIZING );
 			this.niche = niche;
 			this.payoff = payoff;
 			this.numRounds = numRounds;
+			this.random = random;
 		}
 		
 		@Override
-		public SearchDirection direction() { return SearchDirection.MAXIMIZING; }
-		
-		@Override
 		public Double apply( BitVector x ) {
-			Result result = IPD.play( BasicPlayers.AxelrodBinaryEncodedPlayer.phantomMemory(x), niche, payoff, numRounds, null );
+			Result result = IPD.play( BasicPlayers.AxelrodBinaryEncodedPlayer.phantomMemory(x), 
+				niche, payoff, numRounds, random );
 			
 			return result.payoff1;
 		}
 	}
+	
+	///////////////////////////////
 	
 	public static final class Result {
 		

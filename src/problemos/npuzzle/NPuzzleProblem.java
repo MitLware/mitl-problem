@@ -1,5 +1,6 @@
 package problemos.npuzzle;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 import org.mitlware.SearchDirection;
@@ -18,14 +19,12 @@ public final class NPuzzleProblem {
 		///////////////////////////
 		
 		public HammingDistance( NPuzzleState target ) {
+			super( SearchDirection.MINIMIZING );
 			this.target = target;
 		}
 		
 		///////////////////////////
 
-		@Override
-		public SearchDirection direction() { return SearchDirection.MINIMIZING; }
-		
 		@Override
 		public Integer apply( NPuzzleState s ) {
 			if( s.size() != target.size() )
@@ -51,15 +50,13 @@ public final class NPuzzleProblem {
 		///////////////////////////
 		
 		public ManhattanDistance( NPuzzleState target ) {
+			super( SearchDirection.MINIMIZING );
 			this.target = target;
 			targetCoords = mapPermToCoords( target );
 		}
 		
 		///////////////////////////
 
-		@Override
-		public SearchDirection direction() { return SearchDirection.MINIMIZING; }
-		
 		@Override
 		public Integer apply(NPuzzleState s ) {
 
@@ -98,8 +95,8 @@ public final class NPuzzleProblem {
 	implements Locality< NPuzzleState > {
 
 		@Override
-		public Stream< NPuzzleState > apply(NPuzzleState incumbent) {
-			return incumbent.neighbors().stream();
+		public List< NPuzzleState > apply(NPuzzleState incumbent) {
+			return incumbent.neighbors();
 		}
 	}
 }

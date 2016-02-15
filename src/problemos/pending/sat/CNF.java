@@ -28,11 +28,9 @@ public final class CNF {
 		///////////////////////////
 		
 		public MAXSAT( CNF impl ) {
+			super( SearchDirection.MINIMIZING );
 			this.impl = impl;
 		}
-		
-		@Override
-		public SearchDirection direction() { return SearchDirection.MINIMIZING; }
 		
 		@Override
 		public Double apply( BitVector x ) {

@@ -1,6 +1,7 @@
 package problemos.windfarm;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 import java.util.stream.Stream;
 
@@ -21,12 +22,8 @@ public final class WindFarmProblem {
 		private WindFarmLayoutEvaluator wfl;
 		
 		public BitVectorRepresentationProblem( WindFarmLayoutEvaluator evaluator ) {
+			super( SearchDirection.MINIMIZING );
 			wfl = evaluator;
-		}
-		
-		@Override
-		public SearchDirection direction() { 
-			return SearchDirection.MINIMIZING;
 		}
 		
 		@Override
@@ -83,7 +80,7 @@ public final class WindFarmProblem {
 
 	public static final class Hamming1Locality implements Locality< BitVector > {
 		
-		public Stream< BitVector > apply( BitVector x ) {
+		public List< BitVector > apply( BitVector x ) {
 			
 			BitVector [] neighbours = new BitVector [ x.length() ]; 
 			for( int i=0; i<x.length(); ++i ) {
@@ -92,7 +89,7 @@ public final class WindFarmProblem {
 				neighbours[ i ] = neighbor;
 			}
 
-			return Arrays.stream( neighbours );
+			return Arrays.asList( neighbours );
 		}
 	}
 	

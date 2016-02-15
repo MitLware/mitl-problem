@@ -15,27 +15,19 @@ public final class MagicSquareProblem {
 	public static final class UnconstrainedProblem 
 	extends Evaluate.Directional< ArrayForm, Integer > {
 
-		private int order;
+		private final int order;
 		
 		public UnconstrainedProblem( int order ) {
+			super( SearchDirection.MINIMIZING );
 			this.order = order;
 		}
 		
-		public int getOrder() {
-			return order;
-		}
-		
-		@Override
-		public SearchDirection direction() { 
-			return SearchDirection.MINIMIZING;
-		}
+		public int getOrder() { return order; }
 		
 		@Override
 		public Integer apply( ArrayForm s ) {
-
-			if ((order * order) != s.size()) {
+			if ((order * order) != s.size())
 				throw new IllegalArgumentException();
-			}
 
 			int result = 0;
 			for (int i=0; i<order(s); ++i) {
@@ -109,6 +101,8 @@ public final class MagicSquareProblem {
 		private int pen_violation;
 		
 		public ConstrainedProblem( int order, int row_c, int col_c, int pen_violation ) {
+			super( SearchDirection.MINIMIZING );
+			
 			this.order = order;
 			this.row_c = row_c;
 			this.col_c = col_c;
@@ -122,16 +116,10 @@ public final class MagicSquareProblem {
 		}
 		
 		@Override
-		public SearchDirection direction() { 
-			return SearchDirection.MINIMIZING;
-		}
-		
-		@Override
 		public Integer apply( ArrayForm s ) {
 
-			if ((order * order) != s.size()) {
+			if ((order * order) != s.size())
 				throw new IllegalArgumentException();
-			}
 
 			int result = 0;
 			for (int i=0; i<order(s); ++i) {
@@ -222,7 +210,6 @@ public final class MagicSquareProblem {
 			return result;
 		}
 	}
-	
 }
 
 // End ///////////////////////////////////////////////////////////////

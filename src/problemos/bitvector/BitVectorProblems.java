@@ -1,6 +1,7 @@
 package problemos.bitvector;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 import java.util.stream.Stream;
 
@@ -17,10 +18,9 @@ public final class BitVectorProblems {
 
 	public static final class Onemax 
 	extends Evaluate.Directional< BitVector, Double > {
-
-		@Override
-		public SearchDirection direction() { return SearchDirection.MAXIMIZING; }
 		
+		public Onemax() { super( SearchDirection.MAXIMIZING ); }
+
 		@Override
 		public Double apply( BitVector x ) {
 			return x.cardinality() / (double)x.length();
@@ -36,12 +36,10 @@ public final class BitVectorProblems {
 		
 		///////////////////////////
 		
-		public Mimicry( BitVector target ) {
+		public Mimicry(BitVector target) { 
+			super( SearchDirection.MINIMIZING );
 			this.target = target;
 		}
-		
-		@Override
-		public SearchDirection direction() { return SearchDirection.MINIMIZING; }
 		
 		@Override
 		public Double apply( BitVector x ) {
@@ -61,8 +59,7 @@ public final class BitVectorProblems {
     public static final class Palindrome
 	extends Evaluate.Directional< BitVector, Integer > {
 
-		@Override
-		public SearchDirection direction() { return SearchDirection.MAXIMIZING; }
+		public Palindrome() { super( SearchDirection.MAXIMIZING ); }
 		
 		@Override
 		public Integer apply( BitVector x ) {
@@ -88,9 +85,9 @@ public final class BitVectorProblems {
 	
 		
 		/**
-		 * In Checkerboard problem (Baluja & Davies, 1997; Larranaga & Lozano, 2001), a s × s
+		 * In Checkerboard problem (Baluja & Davies, 1997; Larranaga & Lozano, 2001), a s ï¿½ s
 		 * grid is given where each grid can take value 0 or 1. The goal is to create a checkerboard
-		 * pattern of 0’s and 1’s on a n x n grid. i.e. each grid with a value 1 should be surrounded in
+		 * pattern of 0ï¿½s and 1ï¿½s on a n x n grid. i.e. each grid with a value 1 should be surrounded in
 		 * all four basic directions by a value of 0, and vice versa. The fitness function is the number
 		 * of bits in the (n-2)(n-2) grid, centered in the overall n x n grid, with the correct neighbours.
 		 * <p>
@@ -102,6 +99,7 @@ public final class BitVectorProblems {
 		 * {d(x_{i,j}, x_{i-1,j}) + d(x_{i,j}, x_{i+1,j}) + d(x_{i,j}, x_{i,j-1}) + d(x_{i,j}, x_{i,j+1})}
 		 */
 		public Checkerboard( int n ) {
+			super( SearchDirection.MAXIMIZING);
 			/*
 			StringBuffer s = new StringBuffer();
 			for( int i=0; i<n; ++i )
@@ -119,9 +117,6 @@ public final class BitVectorProblems {
 	        }
 		}
 
-		@Override
-		public SearchDirection direction() { return SearchDirection.MAXIMIZING; }
-		
 		///////////////////////////////
 	
 		@Override
@@ -161,9 +156,8 @@ public final class BitVectorProblems {
 	public static final class LeadingOnes
 	extends Evaluate.Directional< BitVector, Integer > {
 
-		@Override
-		public SearchDirection direction() { return SearchDirection.MAXIMIZING; }
-
+		public LeadingOnes() { super( SearchDirection.MAXIMIZING ); }
+		
 		@Override
 		public Integer apply( BitVector x ) {
 
@@ -193,6 +187,8 @@ public final class BitVectorProblems {
 		}
 		
 		public Trap(int n, int blockSize) {
+			super( SearchDirection.MAXIMIZING );
+			
 			if ((n % blockSize) != 0) {
 				throw new IllegalArgumentException();
 			}
@@ -207,9 +203,6 @@ public final class BitVectorProblems {
 	        }
 		}
 		
-		@Override
-		public SearchDirection direction() { return SearchDirection.MAXIMIZING; }
-
 		@Override
 		public Integer apply( BitVector x ) {
 			/* global trap
@@ -263,14 +256,12 @@ public final class BitVectorProblems {
 	    }
 	    
 	    public RoyalRoad(int blockSize) {
+			super( SearchDirection.MAXIMIZING );	    	
 	        theBlockSize = blockSize;
 	    }
 	    
 	    ///////////////////////////////
 
-		@Override
-		public SearchDirection direction() { return SearchDirection.MAXIMIZING; }
-	    
 		@Override
 		public Double apply(BitVector x) {
 			
@@ -337,16 +328,14 @@ public final class BitVectorProblems {
 		/**
 		 * Baluja, S. & Caruana, R. (1995). Removing the genetics from the standard genetic algorithm,
 		 * Proceedings of the International Conference on Machine Learning, Morgan
-		 * Kaufmann Publishers, pp. 38–46.
+		 * Kaufmann Publishers, pp. 38ï¿½46.
 		 */
 	    public FourPeaks(int T, int reward ) {
+			super( SearchDirection.MAXIMIZING );	    	
 	        this.t = T;
 	        this.reward = reward;
 	    }
 
-		@Override
-		public SearchDirection direction() { return SearchDirection.MAXIMIZING; }
-	    
 		@Override
 		public Double apply( BitVector x) {
 	        
@@ -370,7 +359,7 @@ public final class BitVectorProblems {
 	/**
 	 * Watson, R. A., Hornby, G. S., and Pollack, J. B. (1998). Modeling building-block interdependency.
 	 * In Parallel Problem Solving from Nature - PPSN V International Conference,
-	 * pages 97–106, Amsterdam, The Netherlands. Springer Verlag. LNCS 1498.
+	 * pages 97ï¿½106, Amsterdam, The Netherlands. Springer Verlag. LNCS 1498.
 	 */
 	public static final class HIFF 
 	extends Evaluate.Directional< BitVector, Double > {
@@ -384,9 +373,8 @@ public final class BitVectorProblems {
 		}
 
 		///////////////////////////////
-		
-		@Override
-		public SearchDirection direction() { return SearchDirection.MAXIMIZING; }
+
+		public HIFF() { super( SearchDirection.MAXIMIZING ); }
 		
 		@Override
 		public Double apply( BitVector x ) {
@@ -445,9 +433,7 @@ public final class BitVectorProblems {
 		
 		///////////////////////////
 		
-		public UniformMutation( Random random ) {
-			this.random = random;
-		}
+		public UniformMutation( Random random ) { this.random = random; }
 
 		@Override
 		public BitVector apply( BitVector x ) {
@@ -456,12 +442,30 @@ public final class BitVectorProblems {
 			return result;
 		}
 	}
+
+	///////////////////////////////
+	
+	public static final class FlipBit implements Perturb< BitVector > {
+		
+		private final int index;
+		
+		///////////////////////////
+		
+		public FlipBit( int index ) { this.index = index; }
+
+		@Override
+		public BitVector apply( BitVector x ) {
+			BitVector result = x.clone();
+			result.flip( index % result.length() );
+			return result;
+		}
+	}
 	
 	///////////////////////////////
 
 	public static final class Hamming1Locality implements Locality< BitVector > {
 		
-		public Stream< BitVector > apply( BitVector x ) {
+		public List< BitVector > apply( BitVector x ) {
 			
 			BitVector [] neighbours = new BitVector [ x.length() ]; 
 			for( int i=0; i<x.length(); ++i ) {
@@ -470,11 +474,9 @@ public final class BitVectorProblems {
 				neighbours[ i ] = neighbor;
 			}
 
-			return Arrays.stream( neighbours );
+			return Arrays.asList( neighbours );
 		}
 	}
-	
-	///////////////////////////////	
 }
 
 // End ///////////////////////////////////////////////////////////////

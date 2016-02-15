@@ -43,15 +43,10 @@ public interface BinaryProblem {
 			@Override
 			public Evaluate.Directional<BitVector, Double> evaluator() {
 				
-				return new Evaluate.Directional<BitVector, Double>() {
+				return new Evaluate.Directional<BitVector, Double>(problem.evaluator().direction()) {
 					public Double apply( BitVector x ) { 
 						double [] asRealVector = encoding.decode( x, numBitsPerDimension, bounds );
 						return problem.evaluator().apply( asRealVector );
-					}
-
-					@Override
-					public SearchDirection direction() {
-						return problem.evaluator().direction();
 					}
 				};
 			}

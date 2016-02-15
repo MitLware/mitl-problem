@@ -165,8 +165,9 @@ public class TestIPD {
 	
 	@Test
 	public void testIPDFitness() {
+		Random random = new Random( 0 );		
 		Payoff payoff = Payoff.defaultPayoff; 
-		Evaluate.Directional<BitVector, Double> ipd = new IPD.IPDProblem(new BasicPlayers.AllD(), payoff, 10);
+		Evaluate.Directional<BitVector, Double> ipd = new IPD.IPDProblem(new BasicPlayers.AllD(), payoff, 10, random );
 		
 		assertEquals(0, ipd.apply(BitVector.fromBinaryString( "000000" )).doubleValue(), 0); // all C
 		assertEquals(10, ipd.apply(BitVector.fromBinaryString( "111111" )).doubleValue(), 0); // all D
