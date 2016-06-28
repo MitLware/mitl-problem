@@ -47,7 +47,7 @@ public class WindScenario {
 	public double trans_CT;
 	public double minDist;
 
-	WindScenario(String xmlFileName) throws Exception {
+	public WindScenario(String xmlFileName) throws Exception {
 		File fXmlFile = new File(xmlFileName);
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
