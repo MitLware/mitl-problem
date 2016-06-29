@@ -1,4 +1,4 @@
-package problemos.pending.sat;
+package problemos.sat;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -12,9 +12,9 @@ import java.util.logging.Logger;
 
 //////////////////////////////////////////////////////////////////////
 
-public final class ReadDIMACS {
+public final class DIMACSFormat {
 	
-	private static Logger logger = Logger.getLogger( ReadDIMACS.class.getName() );
+	private static Logger logger = Logger.getLogger( DIMACSFormat.class.getName() );
 	
 	///////////////////////////////
 	
@@ -122,7 +122,7 @@ public final class ReadDIMACS {
 	{ 
 		// String fileName = "resources/sat/unif-c500-v250-s453695930.cnf";		
 		String fileName = "resources/sat/simple_v3_c2.cnf";
-		CNF cnf = readDIMACS( ReadDIMACS.class.getResourceAsStream( fileName ) );
+		CNF cnf = readDIMACS( DIMACSFormat.class.getResourceAsStream( fileName ) );
 		//CNF cnf = readDIMACS( new FileInputStream( fileName ) );
 		System.out.println( cnf );
 		System.out.println( "All done." );
