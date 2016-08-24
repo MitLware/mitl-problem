@@ -23,6 +23,7 @@ import jeep.lang.Diag;
 import jeep.lang.UnsupportedFormatException;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.apache.commons.lang3.tuple.Pair;
 
 import cformat.ScanfReader;
@@ -39,7 +40,7 @@ public final class TSPLibFormat {
 	private final String comment;
 	private final EdgeWeightType edgeWeightType;
 	private final EdgeWeightFormat edgeWeightFormat;
-	private final Map< String, Object > symbolTable;
+	private final List< Pair< String, Object > > symbolTable;
 
 	///////////////////////////////	
 
@@ -51,8 +52,8 @@ public final class TSPLibFormat {
 	
 	///////////////////////////////
 	
-	public TSPLibFormat( String name, Type type, int dimension, 
-			String comment, EdgeWeightType edgeWeightType, EdgeWeightFormat edgeWeightFormat, Map< String, Object > symbolTable ) {
+	private TSPLibFormat( String name, Type type, int dimension, 
+			String comment, EdgeWeightType edgeWeightType, EdgeWeightFormat edgeWeightFormat, List< Pair< String, Object > > symbolTable ) {
 		this.name = name;
 		this.type = type;
 		this.dimension = dimension;
@@ -63,10 +64,17 @@ public final class TSPLibFormat {
 	}
 
 	///////////////////////////////
+
+	private static Object lookup(List< Pair< String, Object > > symbolTable, String key) {
+		for( int i=0; i<symbolTable.size(); ++i )
+			if( symbolTable.get(i).getKey().equals( key ) ) 
+				return symbolTable.get(i).getValue();
+		return null;
+	}
 	
 	public static TSPLibFormat read( InputStream is ) throws IOException, BadFormatException {
 		
-		Map< String, Object > symbolTable = new HashMap< String, Object >();
+		List< Pair< String, Object > > symbolTable = new ArrayList<>(); // new HashMap< String, Object >();
 		Reader reader = new InputStreamReader( is );
 		LineNumberReader lineReader = new LineNumberReader( reader );
 		while( process( lineReader, symbolTable ) )
@@ -74,12 +82,12 @@ public final class TSPLibFormat {
 
 		///////////////////////////
 		
-		String name = (String)symbolTable.get( "NAME" );
-		Type type = (Type)symbolTable.get( "TYPE" );
-		int dimension = (Integer)symbolTable.get( "DIMENSION" );
-		String comment = (String)symbolTable.get( "COMMENT" );
-		EdgeWeightType edgeWeightType = (EdgeWeightType)symbolTable.get( "EDGE_WEIGHT_TYPE" );
-		EdgeWeightFormat edgeWeightFormat = (EdgeWeightFormat)symbolTable.get( "EDGE_WEIGHT_FORMAT" ); 		
+		String name = (String)lookup( symbolTable, "NAME" );
+		Type type = (Type)lookup( symbolTable, "TYPE" );
+		int dimension = (Integer)lookup( symbolTable, "DIMENSION" );
+		String comment = (String)lookup( symbolTable, "COMMENT" );
+		EdgeWeightType edgeWeightType = (EdgeWeightType)lookup( symbolTable, "EDGE_WEIGHT_TYPE" );
+		EdgeWeightFormat edgeWeightFormat = (EdgeWeightFormat)lookup( symbolTable, "EDGE_WEIGHT_FORMAT" ); 		
 		return new TSPLibFormat( name, type, dimension, 
 				comment, edgeWeightType, edgeWeightFormat, symbolTable );
 	}
@@ -96,7 +104,47 @@ public final class TSPLibFormat {
 	public String getComment() { return comment; }
 	
 	public BiFunction< Integer, Integer, Integer > getDistanceFn() {
-		return edgeWeightType.distanceFn( symbolTable ); 
+		Map< String, Object > fastSymbolTable = new HashMap< String, Object >();
+		for( Pair< String, Object > p: symbolTable )
+			fastSymbolTable.put( p.getKey(), p.getValue() );
+		
+		return edgeWeightType.distanceFn( fastSymbolTable ); 
+	}
+	
+	private static <T>  String listToString(List<T> l){
+		StringBuilder sb = new StringBuilder();
+		for( int i=0; i<l.size() - 1; ++i )
+			sb.append( l.get(i) + " " );
+		sb.append( l.get(l.size() - 1) );		
+		return sb.toString();
+	}
+	
+	public String toTSPLibFormat() {
+		StringBuilder sb = new StringBuilder();
+		for( Pair< String, Object > p: symbolTable ) {
+			switch( p.getKey() ) {
+				case "NODE_COORD_SECTION": {
+					sb.append( "NODE_COORD_SECTION\n" );					
+					switch( edgeWeightType ) {
+						case EUC_2D : {
+							Map< Integer, List< Double > > nodeCoords = (Map< Integer, List<Double>>)lookup(symbolTable,"NODE_COORD_SECTION");
+							for( Map.Entry< Integer, List< Double > > e: nodeCoords.entrySet() )
+								sb.append( e.getKey() + " " + listToString( e.getValue() ) + "\n" );
+						} break;
+						case ATT: case CEIL_2D: case EUC_3D: case EXPLICIT: case GEO:
+						case MAN_2D: case MAN_3D: case MAX_2D: case MAX_3D:
+						case SPECIAL: case XRAY1: case XRAY2:
+						default: throw new UnsupportedOperationException();
+					}
+				} break;
+				default:
+					sb.append( p.getKey() + ": " + p.getValue() + "\n");
+				break;				
+			}
+		}
+		
+		sb.append( "EOF\n" );
+		return sb.toString();
 	}
 	
 	///////////////////////////////
@@ -213,8 +261,8 @@ public final class TSPLibFormat {
 	
 	///////////////////////////////
 	
-	private static void throwIfRedefined( String keyStr, Map< String, Object > symbolTable ) {
-		Object existingValue = symbolTable.get( keyStr );
+	private static void throwIfRedefined( String keyStr, List< Pair< String, Object > > symbolTable ) {
+		Object existingValue = lookup( symbolTable, keyStr );
 		if( existingValue != null )
 			throw new RuntimeException( "Redefinition of " + keyStr );
 	}
@@ -239,7 +287,7 @@ public final class TSPLibFormat {
 
 	///////////////////////////////
 	
-	private static boolean process( LineNumberReader lineReader, Map< String, Object > symbolTable ) 
+	private static boolean process( LineNumberReader lineReader, List< Pair< String, Object > > symbolTable ) 
 	throws IOException, UnsupportedFormatException, BadFormatException {
 		
 		if( !lineReader.ready() )
@@ -249,7 +297,7 @@ public final class TSPLibFormat {
 		
 		///////////////////////////
 		
-		// Diag.println( line );
+// Diag.println( line );
 		Pair< String, String > p = parseKeyword( line );
 		String key = p.getKey();
 		String value = p.getValue();		
@@ -259,7 +307,7 @@ public final class TSPLibFormat {
 		switch( key ) {
 			case "NAME" : {
 				throwIfRedefined( key, symbolTable );
-				symbolTable.put( "NAME", value );
+				symbolTable.add( Pair.of( "NAME", value ) );
 			} break;
 			case "TYPE" : {
 				throwIfRedefined( key, symbolTable );
@@ -269,20 +317,20 @@ public final class TSPLibFormat {
 				
 				Optional< Type > opt = Arrays.asList( Type.values() ).stream().filter( t -> t.toString().equals( tokens[0] ) ).findFirst();
 				final Type type = opt.orElseThrow( () -> new UnsupportedFormatException( "TSP type expected, found : " + value ) );
-				symbolTable.put( "TYPE", type );
+				symbolTable.add( Pair.of( "TYPE", type ) );
 			} break;
 			case "COMMENT" : {
-				String existing = (String)symbolTable.get( "COMMENT");
+				String existing = (String)lookup( symbolTable,"COMMENT");
 				if( existing == null )
-					symbolTable.put( "COMMENT", value );
+					symbolTable.add( Pair.of( "COMMENT", value ) );
 				else
-					symbolTable.put( "COMMENT", existing + " "+ value );					
+					symbolTable.add( Pair.of( "COMMENT", existing + " "+ value ) );					
 			} break;
 			case "DIMENSION" : {
 				throwIfRedefined( key, symbolTable );
 				
 				final int dimension = Integer.valueOf( value );
-				symbolTable.put( "DIMENSION", dimension );
+				symbolTable.add( Pair.of( "DIMENSION", dimension ) );
 			} break;
 			case "CAPACITY" : { 
 				throwIfRedefined( key, symbolTable );
@@ -291,47 +339,47 @@ public final class TSPLibFormat {
 				if( capacity <= 0 )
 					new UnsupportedFormatException( "Valid CAPACITY expected, found : " + capacity );
 				
-				symbolTable.put( "CAPACITY", capacity );
+				symbolTable.add( Pair.of( "CAPACITY", capacity ) );
 			} break;
 			case "EDGE_WEIGHT_TYPE" : { 
 				throwIfRedefined( key, symbolTable );
 				
 				Optional< EdgeWeightType > opt = Arrays.asList( EdgeWeightType.values() ).stream().filter( t -> t.toString().equals( value ) ).findFirst();		
 				final EdgeWeightType type = opt.orElseThrow( () -> new UnsupportedFormatException( "Valid EDGE_WEIGHT_TYPE expected, found : " + value ) );
-				symbolTable.put( "EDGE_WEIGHT_TYPE", type );
+				symbolTable.add( Pair.of( "EDGE_WEIGHT_TYPE", type ) );
 			} break;
 			case "EDGE_WEIGHT_FORMAT" : {
 				throwIfRedefined( key, symbolTable );				
 				
 				Optional< EdgeWeightFormat > opt = Arrays.asList( EdgeWeightFormat.values() ).stream().filter( t -> t.toString().equals( value ) ).findFirst();		
 				final EdgeWeightFormat type = opt.orElseThrow( () -> new UnsupportedFormatException( "Valid EDGE_WEIGHT_FORMAT expected, found : " + value ) );
-				symbolTable.put( "EDGE_WEIGHT_FORMAT", type );
+				symbolTable.add( Pair.of( "EDGE_WEIGHT_FORMAT", type ) );
 			} break;
 			case "EDGE_DATA_FORMAT" : {
 				throwIfRedefined( key, symbolTable );
 				
 				Optional< EdgeDataFormat > opt = Arrays.asList( EdgeDataFormat.values() ).stream().filter( t -> t.toString().equals( value ) ).findFirst();		
 				final EdgeDataFormat type = opt.orElseThrow( () -> new UnsupportedFormatException( "Valid EDGE_DATA_FORMAT expected, found : " + value ) );
-				symbolTable.put( "EDGE_DATA_FORMAT", type );
+				symbolTable.add( Pair.of( "EDGE_DATA_FORMAT", type ) );
 			} break;
 			case "NODE_COORD_TYPE" : {
 				throwIfRedefined( key, symbolTable );
 				
 				Optional< NodeCoordType > opt = Arrays.asList( NodeCoordType.values() ).stream().filter( t -> t.toString().equals( value ) ).findFirst();		
 				final NodeCoordType type = opt.orElseThrow( () -> new UnsupportedFormatException( "Valid NODE_COORD_TYPE expected, found : " + value ) );
-				symbolTable.put( "NODE_COORD_TYPE", type );
+				symbolTable.add( Pair.of( "NODE_COORD_TYPE", type ) );
 			} break;
 			case "DISPLAY_DATA_TYPE" : {
 				throwIfRedefined( key, symbolTable );
 				
 				Optional< DisplayDataType > opt = Arrays.asList( DisplayDataType.values() ).stream().filter( t -> t.toString().equals( value ) ).findFirst();		
 				final DisplayDataType type = opt.orElseThrow( () -> new UnsupportedFormatException( "Valid DISPLAY_DATA_TYPE expected, found : " + value ) );
-				symbolTable.put( "DISPLAY_DATA_TYPE", type );
+				symbolTable.add( Pair.of( "DISPLAY_DATA_TYPE", type ) );
 			} break;
 			case "NODE_COORD_SECTION" : {
 				
-				final NodeCoordType t = (NodeCoordType)symbolTable.get( "NODE_COORD_TYPE" );
-				final EdgeWeightType ewt = (EdgeWeightType)symbolTable.get( "EDGE_WEIGHT_TYPE" );
+				final NodeCoordType t = (NodeCoordType)lookup( symbolTable, "NODE_COORD_TYPE" );
+				final EdgeWeightType ewt = (EdgeWeightType)lookup( symbolTable, "EDGE_WEIGHT_TYPE" );
 				
 				if( t == null && ewt == null ) 
 					throw new BadFormatException( "Unknown number of coords in NODE_COORD_SECTION" );
@@ -343,7 +391,7 @@ public final class TSPLibFormat {
 				else
 					numCoords = ewt.weightDimension().orElseThrow( () -> new BadFormatException( "Unknown number of coords in NODE_COORD_SECTION" ) );
 
-				final Integer dimension = (Integer)symbolTable.get( "DIMENSION");
+				final Integer dimension = (Integer)lookup( symbolTable, "DIMENSION");
 				if( dimension == null )
 					throw new BadFormatException( "DIMENSION must be defind before EDGE_WEIGHT_SECTION" );
 				
@@ -364,7 +412,7 @@ public final class TSPLibFormat {
 					nodes.put( row.get( 0 ).intValue(), tail );					
 				}		
 				
-				symbolTable.put( "NODE_COORD_SECTION", nodes );
+				symbolTable.add( Pair.of("NODE_COORD_SECTION", nodes ));
 			} break;
 			case "DEPOT_SECTION" : { 
 
@@ -386,7 +434,7 @@ public final class TSPLibFormat {
 					scanf.close();
 				}	
 				
-				symbolTable.put( "DEPOT_SECTION", depotNodes );
+				symbolTable.add( Pair.of("DEPOT_SECTION", depotNodes ) );
 				
 			} break;
 			case "DEMAND_SECTION" : {
@@ -405,15 +453,15 @@ public final class TSPLibFormat {
 				throw new UnsupportedFormatException( "Not supported:" + key );				
 			} // break;
 			case "EDGE_WEIGHT_SECTION" : {
-				if( !symbolTable.keySet().contains( "EDGE_WEIGHT_FORMAT") )
+				if( lookup( symbolTable, "EDGE_WEIGHT_FORMAT") == null )
 					throw new RuntimeException( "EDGE_WEIGHT_FORMAT must be defind before EDGE_WEIGHT_SECTION" );
 				
-				final EdgeWeightFormat ewf = (EdgeWeightFormat)symbolTable.get( "EDGE_WEIGHT_FORMAT" );
+				final EdgeWeightFormat ewf = (EdgeWeightFormat)lookup(symbolTable, "EDGE_WEIGHT_FORMAT" );
 
-				if( !symbolTable.keySet().contains( "DIMENSION") )
+				if( lookup( symbolTable, "DIMENSION") == null )
 					throw new RuntimeException( "DIMENSION must be defind before EDGE_WEIGHT_SECTION" );
 
-				final int dimension = (Integer)symbolTable.get( "DIMENSION" );
+				final int dimension = (Integer)lookup( symbolTable, "DIMENSION" );
 				
 				Map< Pair< Integer, Integer >, Integer > matrix = null;
 				
@@ -433,7 +481,7 @@ public final class TSPLibFormat {
 					break;				
 				}
 
-				symbolTable.put( "EDGE_WEIGHT_SECTION", matrix );
+				symbolTable.add( Pair.of("EDGE_WEIGHT_SECTION", matrix ));
 	
 			} break;
 			case "EOF" : { isEOF = true; } break;

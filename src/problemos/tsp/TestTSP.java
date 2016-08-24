@@ -2,10 +2,14 @@ package problemos.tsp;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,6 +17,7 @@ import java.util.Map;
 import java.util.function.BiFunction;
 
 import jeep.io.DirectoryListing;
+import jeep.io.StringInputStream;
 import jeep.lang.BadFormatException;
 import jeep.lang.Diag;
 import jeep.lang.UnsupportedFormatException;
@@ -69,7 +74,7 @@ public class TestTSP {
 	}
 	
 	///////////////////////////////
-	
+
 	@Test
 	public void testTSPLib() throws IOException, BadFormatException {
 		String directoryName = System.getProperty( "user.dir" ) + "/resources/" + "tsplib/";		
@@ -101,8 +106,28 @@ public class TestTSP {
 		Diag.println( "#files " + tspFiles.size() );
 		Diag.println( "numAsymetric: " + numAsymetric );		
 		Diag.println( "numUnsupported: " + numUnsupported );
-		
 	}
+
+	///////////////////////////////
+
+	private static String readFileToString(File path, Charset encoding) throws IOException {
+		byte[] encoded = Files.readAllBytes(Paths.get(path.toString()));
+		return new String(encoded, encoding);
+	}
+	
+	private void testReadWriteTSPLibImpl(File input) throws IOException, BadFormatException {
+		TSPLibFormat tsp = TSPLibFormat.read( new FileInputStream(input) );
+		String expected = readFileToString(input,Charset.defaultCharset());
+		String actual = tsp.toTSPLibFormat();
+		assertEquals(expected,actual);
+	}
+	
+	@Test	
+	public void testReadWriteTSPLib() throws IOException, BadFormatException {
+		String path = System.getProperty( "user.dir" ) + "/resources/" + "unitTest.tsp";
+		testReadWriteTSPLibImpl(new File(path));
+	}
+	
 }
 
 // End ///////////////////////////////////////////////////////////////
