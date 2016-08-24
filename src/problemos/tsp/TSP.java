@@ -2,6 +2,7 @@ package problemos.tsp;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Optional;
 import java.util.function.BiFunction;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -17,6 +18,8 @@ public interface TSP {
 	public boolean isSymmetric();
 	
 	public BiFunction< Integer, Integer, Double > getDistanceFn();
+	
+	public Optional<String> toTSPLibFormat();
 	
 	///////////////////////////////
 	
@@ -51,6 +54,11 @@ public interface TSP {
 		@Override
 		public BiFunction<Integer, Integer, Double> getDistanceFn() {
 			return (i,j) -> (double)impl.getDistanceFn().apply( i, j );
+		}
+		
+		@Override		
+		public Optional<String> toTSPLibFormat() {
+			return impl.toTSPLibFormat();
 		}
 		
 		@Override

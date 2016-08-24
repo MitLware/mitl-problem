@@ -119,7 +119,7 @@ public final class TSPLibFormat {
 		return sb.toString();
 	}
 	
-	public String toTSPLibFormat() {
+	public Optional<String> toTSPLibFormat() {
 		StringBuilder sb = new StringBuilder();
 		for( Pair< String, Object > p: symbolTable ) {
 			switch( p.getKey() ) {
@@ -134,7 +134,7 @@ public final class TSPLibFormat {
 						case ATT: case CEIL_2D: case EUC_3D: case EXPLICIT: case GEO:
 						case MAN_2D: case MAN_3D: case MAX_2D: case MAX_3D:
 						case SPECIAL: case XRAY1: case XRAY2:
-						default: throw new UnsupportedOperationException();
+						default: return Optional.empty();
 					}
 				} break;
 				default:
@@ -144,7 +144,7 @@ public final class TSPLibFormat {
 		}
 		
 		sb.append( "EOF\n" );
-		return sb.toString();
+		return Optional.of(sb.toString());
 	}
 	
 	///////////////////////////////

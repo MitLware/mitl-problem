@@ -12,6 +12,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Optional;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
@@ -118,8 +119,8 @@ public class TestTSP {
 	private void testReadWriteTSPLibImpl(File input) throws IOException, BadFormatException {
 		TSPLibFormat tsp = TSPLibFormat.read( new FileInputStream(input) );
 		String expected = readFileToString(input,Charset.defaultCharset());
-		String actual = tsp.toTSPLibFormat();
-		assertEquals(expected,actual);
+		Optional<String> actual = tsp.toTSPLibFormat();
+		assertEquals(Optional.of(expected),actual);
 	}
 	
 	@Test	
