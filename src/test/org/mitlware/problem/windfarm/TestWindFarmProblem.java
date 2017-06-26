@@ -1,4 +1,4 @@
-package problemos.windfarm;
+package org.mitlware.problem.windfarm;
 
 import static org.junit.Assert.*;
 

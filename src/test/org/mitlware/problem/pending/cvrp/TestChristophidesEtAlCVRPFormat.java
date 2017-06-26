@@ -1,4 +1,4 @@
-package problemos.pending.cvrp;
+package org.mitlware.problem.pending.cvrp;
 
 import static org.junit.Assert.*;
 
@@ -8,7 +8,7 @@ import java.io.InputStream;
 
 import org.junit.Test;
 
-import problemos.pending.cvrp.ChristophidesEtAlCVRPFormat.CVRPProblemDescription;
+import org.mitlware.problem.pending.cvrp.ChristophidesEtAlCVRPFormat.CVRPProblemDescription;
 
 
 //////////////////////////////////////////////////////////////////////

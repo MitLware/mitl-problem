@@ -1,4 +1,4 @@
-package problemos.numeric;
+package org.mitlware.problem.numeric;
 
 import static org.junit.Assert.*;
 

@@ -1,4 +1,4 @@
-package problemos.bitvector;
+package org.mitlware.problem.bitvector;
 
 import static org.junit.Assert.*;
 

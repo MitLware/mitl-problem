@@ -1,4 +1,4 @@
-package problemos.ttp;
+package org.mitlware.problem.ttp;
 
 import static org.junit.Assert.*;
 
