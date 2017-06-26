@@ -1,4 +1,4 @@
-package problemos.tsp;
+package org.mitlware.problem.tsp;
 
 import java.util.ArrayList;
 import java.util.List;

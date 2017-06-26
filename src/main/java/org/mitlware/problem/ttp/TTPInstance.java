@@ -1,4 +1,4 @@
-package problemos.ttp;
+package org.mitlware.problem.ttp;
 
 import java.io.BufferedReader;
 import java.io.File;

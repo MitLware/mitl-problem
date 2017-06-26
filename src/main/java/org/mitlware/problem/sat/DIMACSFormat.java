@@ -1,4 +1,4 @@
-package problemos.sat;
+package org.mitlware.problem.sat;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;

@@ -1,4 +1,4 @@
-package problemos.mkp;
+package org.mitlware.problem.mkp;
 
 import statelet.bitvector.BitVector;
 

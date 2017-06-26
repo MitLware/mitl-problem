@@ -1,4 +1,4 @@
-package problemos.sat;
+package org.mitlware.problem.sat;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -6,7 +6,7 @@ import java.io.InputStream;
 
 import org.junit.Test;
 
-import problemos.sat.DIMACSFormat.BadDIMACSFormatException;
+import org.mitlware.problem.sat.DIMACSFormat.BadDIMACSFormatException;
 
 //////////////////////////////////////////////////////////////////////
 

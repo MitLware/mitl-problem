@@ -1,4 +1,4 @@
-package problemos.blocksworld;
+package org.mitlware.problem.blocksworld;
 
 import java.util.ArrayList;
 import java.util.List;

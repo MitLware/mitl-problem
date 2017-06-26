@@ -1,4 +1,4 @@
-package problemos.pending.timetabling;
+package org.mitlware.problem.pending.timetabling;
 
 import jeep.lang.HashCode;
 

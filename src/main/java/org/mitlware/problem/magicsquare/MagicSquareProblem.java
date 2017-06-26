@@ -1,4 +1,4 @@
-package problemos.magicsquare;
+package org.mitlware.problem.magicsquare;
 
 import java.util.Random;
 

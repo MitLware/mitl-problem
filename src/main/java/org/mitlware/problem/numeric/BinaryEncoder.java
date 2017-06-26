@@ -1,4 +1,4 @@
-package problemos.numeric;
+package org.mitlware.problem.numeric;
 
 import java.math.BigInteger;
 import java.util.Arrays;

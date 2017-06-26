@@ -1,4 +1,4 @@
-package problemos.npuzzle;
+package org.mitlware.problem.npuzzle;
 
 import java.util.List;
 import java.util.stream.Stream;

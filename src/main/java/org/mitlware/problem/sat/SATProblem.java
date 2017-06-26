@@ -1,4 +1,4 @@
-package problemos.sat;
+package org.mitlware.problem.sat;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -14,7 +14,8 @@ import java.util.Random;
 import org.mitlware.SearchDirection;
 import org.mitlware.mutable.Evaluate;
 
-import problemos.sat.DIMACSFormat.BadDIMACSFormatException;
+import org.mitlware.problem.sat.DIMACSFormat.BadDIMACSFormatException;
+
 import statelet.bitvector.BitVector;
 
 //////////////////////////////////////////////////////////////////////

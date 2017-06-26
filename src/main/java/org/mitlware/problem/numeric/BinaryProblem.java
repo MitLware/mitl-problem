@@ -1,4 +1,4 @@
-package problemos.numeric;
+package org.mitlware.problem.numeric;
 
 import java.util.Optional;
 import java.util.function.Function;

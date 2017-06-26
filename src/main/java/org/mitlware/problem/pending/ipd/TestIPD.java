@@ -1,4 +1,4 @@
-package problemos.pending.ipd;
+package org.mitlware.problem.pending.ipd;
 
 import static org.junit.Assert.assertEquals;
 
@@ -9,7 +9,8 @@ import java.util.Random;
 import org.junit.Test;
 import org.mitlware.mutable.Evaluate;
 
-import problemos.pending.ipd.IPD.Result;
+import org.mitlware.problem.pending.ipd.IPD.Result;
+
 import statelet.bitvector.BitVector;
 
 public class TestIPD {

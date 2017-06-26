@@ -1,4 +1,4 @@
-package problemos.windfarm;
+package org.mitlware.problem.windfarm;
 
 import java.util.ArrayList;
 

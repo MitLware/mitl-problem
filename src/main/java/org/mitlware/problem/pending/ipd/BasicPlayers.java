@@ -1,4 +1,4 @@
-package problemos.pending.ipd;
+package org.mitlware.problem.pending.ipd;
 
 import java.util.ArrayList;
 import java.util.Collections;

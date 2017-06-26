@@ -1,4 +1,4 @@
-package problemos.pending.ipd;
+package org.mitlware.problem.pending.ipd;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +11,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.mitlware.SearchDirection;
 import org.mitlware.mutable.Evaluate;
 
-import problemos.pending.ipd.IPD.Result;
+
 import statelet.bitvector.BitVector;
 
 public final class IPD {

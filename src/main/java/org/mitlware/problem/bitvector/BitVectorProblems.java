@@ -1,4 +1,4 @@
-package problemos.bitvector;
+package org.mitlware.problem.bitvector;
 
 import java.util.Arrays;
 import java.util.List;

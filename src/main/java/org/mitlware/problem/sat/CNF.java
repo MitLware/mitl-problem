@@ -1,4 +1,4 @@
-package problemos.sat;
+package org.mitlware.problem.sat;
 
 import java.util.ArrayList;
 import java.util.List;

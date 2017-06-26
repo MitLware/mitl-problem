@@ -1,4 +1,4 @@
-package problemos.npuzzle;
+package org.mitlware.problem.npuzzle;
 
 import java.util.ArrayList;
 import java.util.Arrays;

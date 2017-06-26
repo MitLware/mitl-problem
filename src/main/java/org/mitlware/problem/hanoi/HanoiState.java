@@ -1,4 +1,4 @@
-package problemos.hanoi;
+package org.mitlware.problem.hanoi;
 
 import java.util.ArrayList;
 import java.util.BitSet;
