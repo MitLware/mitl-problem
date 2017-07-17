@@ -3,13 +3,13 @@ package org.mitlware.problem.numeric;
 import java.util.Optional;
 import java.util.function.Function;
 
-import jeep.math.ClosedInterval;
-import metaxa.FunctionPoint;
+import org.mitlware.support.math.ClosedInterval;
+import org.mitlware.support.FunctionPoint;
 
 import org.mitlware.SearchDirection;
 import org.mitlware.mutable.Evaluate;
 
-import statelet.bitvector.BitVector;
+import org.mitlware.solution.bitvector.BitVector;
 
 //////////////////////////////////////////////////////////////////////
 

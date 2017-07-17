@@ -88,8 +88,8 @@ public final class BlocksWorldState {
 	}
 	
 	public static int HammingDistance( BlocksWorldState a, BlocksWorldState b ) {
-		return jeep.util.Collections.HammingDistance( a.tower, b.tower ) 
-			+ jeep.util.Collections.HammingDistance( a.blocksOnTable, b.blocksOnTable );		
+		return org.mitlware.support.util.MitlCollections.HammingDistance( a.tower, b.tower ) 
+			+ org.mitlware.support.util.MitlCollections.HammingDistance( a.blocksOnTable, b.blocksOnTable );		
 	}
 	
 	///////////////////////////////	

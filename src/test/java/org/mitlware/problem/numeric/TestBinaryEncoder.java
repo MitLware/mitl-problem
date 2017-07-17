@@ -1,8 +1,8 @@
 package org.mitlware.problem.numeric;
 
-import jeep.math.ClosedInterval;
+import org.mitlware.support.math.ClosedInterval;
 import org.junit.Test;
-import statelet.bitvector.BitVector;
+import org.mitlware.solution.bitvector.BitVector;
 
 import static org.junit.Assert.assertArrayEquals;
 

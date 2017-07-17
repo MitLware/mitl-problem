@@ -2,7 +2,7 @@ package org.mitlware.problem.magicsquare;
 
 import org.junit.Test;
 import org.mitlware.mutable.Evaluate;
-import statelet.permutation.ArrayForm;
+import org.mitlware.solution.permutation.ArrayForm;
 
 import static org.junit.Assert.assertEquals;
 

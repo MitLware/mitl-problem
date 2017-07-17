@@ -10,7 +10,7 @@ import org.mitlware.mutable.Evaluate;
 import org.mitlware.mutable.Locality;
 import org.mitlware.mutable.Perturb;
 
-import statelet.bitvector.BitVector;
+import org.mitlware.solution.bitvector.BitVector;
 
 //////////////////////////////////////////////////////////////////////
 

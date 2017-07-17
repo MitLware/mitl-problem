@@ -4,8 +4,8 @@ import java.util.Arrays;
 import java.util.Random;
 import java.util.function.Function;
 
-import jeep.math.ClosedInterval;
-import metaxa.FunctionPoint;
+import org.mitlware.support.math.ClosedInterval;
+import org.mitlware.support.FunctionPoint;
 
 import org.mitlware.mutable.Evaluate;
 

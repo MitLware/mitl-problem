@@ -4,9 +4,9 @@ import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.function.Function;
 
-import statelet.bitvector.BitVector;
-import jeep.math.ClosedInterval;
-import jeep.math.LinearInterpolation;
+import org.mitlware.solution.bitvector.BitVector;
+import org.mitlware.support.math.ClosedInterval;
+import org.mitlware.support.math.LinearInterpolation;
 
 //////////////////////////////////////////////////////////////////////
 

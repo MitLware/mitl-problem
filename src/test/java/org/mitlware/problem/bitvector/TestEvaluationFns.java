@@ -2,7 +2,7 @@ package org.mitlware.problem.bitvector;
 
 import org.junit.Test;
 import org.mitlware.mutable.Evaluate;
-import statelet.bitvector.BitVector;
+import org.mitlware.solution.bitvector.BitVector;
 
 import static org.junit.Assert.assertEquals;
 

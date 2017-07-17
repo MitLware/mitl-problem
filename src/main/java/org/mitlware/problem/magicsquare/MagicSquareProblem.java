@@ -6,7 +6,7 @@ import org.mitlware.SearchDirection;
 import org.mitlware.mutable.Evaluate;
 import org.mitlware.mutable.Perturb;
 
-import statelet.permutation.ArrayForm;
+import org.mitlware.solution.permutation.ArrayForm;
 
 //////////////////////////////////////////////////////////////////////
 

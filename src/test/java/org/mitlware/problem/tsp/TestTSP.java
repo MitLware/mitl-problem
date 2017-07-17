@@ -1,12 +1,12 @@
 package org.mitlware.problem.tsp;
 
-import jeep.io.DirectoryListing;
-import jeep.lang.BadFormatException;
-import jeep.lang.Diag;
-import jeep.lang.UnsupportedFormatException;
-import jeep.math.Vec2;
+import org.mitlware.support.io.DirectoryListing;
+import org.mitlware.support.lang.BadFormatException;
+import org.mitlware.support.lang.Diag;
+import org.mitlware.support.lang.UnsupportedFormatException;
+import org.mitlware.support.math.Vec2;
 import org.junit.Test;
-import statelet.permutation.ArrayForm;
+import org.mitlware.solution.permutation.ArrayForm;
 
 import java.io.File;
 import java.io.FileInputStream;

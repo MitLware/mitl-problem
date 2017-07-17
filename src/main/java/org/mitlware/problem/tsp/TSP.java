@@ -8,9 +8,9 @@ import java.util.function.BiFunction;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import statelet.permutation.ArrayForm;
-import jeep.lang.BadFormatException;
-import jeep.lang.UnsupportedFormatException;
+import org.mitlware.solution.permutation.ArrayForm;
+import org.mitlware.support.lang.BadFormatException;
+import org.mitlware.support.lang.UnsupportedFormatException;
 
 public interface TSP {
 

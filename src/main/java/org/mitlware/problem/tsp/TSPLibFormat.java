@@ -18,9 +18,9 @@ import java.util.function.BiFunction;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-import jeep.lang.BadFormatException;
-import jeep.lang.Diag;
-import jeep.lang.UnsupportedFormatException;
+import org.mitlware.support.lang.BadFormatException;
+import org.mitlware.support.lang.Diag;
+import org.mitlware.support.lang.UnsupportedFormatException;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;

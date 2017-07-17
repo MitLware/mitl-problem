@@ -3,14 +3,14 @@ package org.mitlware.problem.sat;
 import java.util.ArrayList;
 import java.util.List;
 
-import jeep.util.Arrays;
+import org.mitlware.support.util.MitlArrays;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.mitlware.SearchDirection;
 import org.mitlware.mutable.Evaluate;
 
-import statelet.bitvector.BitVector;
+import org.mitlware.solution.bitvector.BitVector;
 
 //////////////////////////////////////////////////////////////////////
 

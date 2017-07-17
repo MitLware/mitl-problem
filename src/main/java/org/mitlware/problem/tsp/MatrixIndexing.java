@@ -3,8 +3,8 @@ package org.mitlware.problem.tsp;
 import java.util.ArrayList;
 import java.util.List;
 
-import jeep.math.DoubleMatrix;
-import jeep.math.IntMatrix;
+import org.mitlware.support.math.DoubleMatrix;
+import org.mitlware.support.math.IntMatrix;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -36,8 +36,6 @@ public final class MatrixIndexing {
 
 	public static Pair< Integer, Integer > lowerTriangularRowMajorIndex( int i, int dim ) {
 		Pair< Integer, Integer > upperIndex = upperTriangularRowMajorIndex( i, dim );
-		// return Pair.of( upperIndex.getLeft(), dim - upperIndex.getRight() - 1 );
-		// return Pair.of( dim - upperIndex.getLeft() - 1, dim - upperIndex.getRight() - 1 );
 		return Pair.of( upperIndex.getRight(), upperIndex.getLeft() );
 	}
 	
@@ -96,7 +94,7 @@ public final class MatrixIndexing {
 		}
 		
 		System.out.println( "lower: " + lower );
-}
+	}
 }
 
 // End ///////////////////////////////////////////////////////////////

@@ -16,7 +16,7 @@ import org.mitlware.mutable.Evaluate;
 
 import org.mitlware.problem.sat.DIMACSFormat.BadDIMACSFormatException;
 
-import statelet.bitvector.BitVector;
+import org.mitlware.solution.bitvector.BitVector;
 
 //////////////////////////////////////////////////////////////////////
 

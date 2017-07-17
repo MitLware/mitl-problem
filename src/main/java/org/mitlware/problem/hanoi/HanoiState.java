@@ -101,7 +101,7 @@ public final class HanoiState {
 		
 		int result = 0;
 		for( int i=0; i<a.poles.size(); ++i )
-			result += jeep.util.Collections.HammingDistance( a.poles.get( i ), b.poles.get( i ) );
+			result += org.mitlware.support.util.MitlCollections.HammingDistance( a.poles.get( i ), b.poles.get( i ) );
 		
 		return result;
 	}
@@ -138,7 +138,7 @@ public final class HanoiState {
 	}
 	
 	private static boolean isValidPole( Stack< Integer > pole ) {
-		return jeep.util.Collections.isSorted( pole, new Comparator< Integer >() {
+		return org.mitlware.support.util.MitlCollections.isSorted( pole, new Comparator< Integer >() {
 			@Override
 			public int compare(Integer a, Integer b) {
 				return b - a;
