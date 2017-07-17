@@ -105,19 +105,33 @@ public class TestTSP {
 	///////////////////////////////
 
 	private static String readFileToString(File path, Charset encoding) throws IOException {
-		byte[] encoded = Files.readAllBytes(Paths.get(path.toString()));
-		return new String(encoded, encoding);
+		// byte[] encoded = Files.readAllBytes(Paths.get(path.toString()));
+		List<String> lines = Files.readAllLines(Paths.get(path.toString()), encoding);
+		// return new String(encoded, encoding);
+		return String.join( "\n", lines );
 	}
-	
+
+//private static void compareStrings(String a, String b) {
+//	for(int i =0; i<Math.min(a.length(),b.length()); ++i )
+//		if( a.charAt(i) == b.charAt(i) )
+//			System.out.println( i );
+//		else 
+//			System.out.println( i + " <<" + a.charAt(i) + ">>" + " <<" + b.charAt(i) + ">>" );
+//}	
+
 	private void testReadWriteTSPLibImpl(File input) throws IOException, BadFormatException {
 		TSPLibFormat tsp = TSPLibFormat.read( new FileInputStream(input) );
-		String expected = readFileToString(input,Charset.defaultCharset());
-		Optional<String> actual = tsp.toTSPLibFormat();
+		String expected = readFileToString(input,java.nio.charset.StandardCharsets.UTF_8).replaceAll("[\n\t ]","");
+		Optional<String> actual = tsp.toTSPLibFormat().map( s -> s.replaceAll("[\n\t ]","") );
+//		org.mitlware.support.lang.Diag.println( "comparingStrings" );
+//compareStrings(Optional.of(expected.toString()).toString(),actual.toString());
+//org.mitlware.support.lang.Diag.println( "comparedStrings" );
 		assertEquals(Optional.of(expected),actual);
 	}
 	
 	@Test	
 	public void testReadWriteTSPLib() throws IOException, BadFormatException {
+		org.mitlware.support.lang.Diag.println( new Date() );		
 		String path = System.getProperty( "user.dir" ) + "/resources/" + "unitTest.tsp";
 		testReadWriteTSPLibImpl(new File(path));
 	}

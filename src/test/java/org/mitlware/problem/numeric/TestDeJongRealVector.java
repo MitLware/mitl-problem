@@ -1,6 +1,6 @@
 package org.mitlware.problem.numeric;
 
-import org.mitlware.support.FunctionPoint;
+import org.mitlware.support.util.FunctionPoint;
 import org.apache.commons.lang3.tuple.Pair;
 import org.junit.Test;
 

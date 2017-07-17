@@ -1,4 +1,4 @@
-NAME: unitTest
+NAME: unitTest 
 TYPE: TSP
 COMMENT: 4 city problem for unit test (truncated kroA100)
 DIMENSION: 4

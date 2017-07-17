@@ -7,7 +7,7 @@ import org.mitlware.support.math.ClosedInterval;
 
 import org.mitlware.mutable.Evaluate;
 
-import org.mitlware.support.FunctionPoint;
+import org.mitlware.support.util.FunctionPoint;
 
 //////////////////////////////////////////////////////////////////////
 

@@ -5,7 +5,7 @@ import java.util.Random;
 import java.util.function.Function;
 
 import org.mitlware.support.math.ClosedInterval;
-import org.mitlware.support.FunctionPoint;
+import org.mitlware.support.util.FunctionPoint;
 
 import org.mitlware.mutable.Evaluate;
 
