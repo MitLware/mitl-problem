@@ -1,8 +1,8 @@
 lazy val root = (project in file(".")).
   settings(
     name := "MitLware-problems",
-    version := "1.0",
-    scalaVersion := "2.12.0"
+    version := "1.1",
+    scalaVersion := "2.12.1"
   )
 
 // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
