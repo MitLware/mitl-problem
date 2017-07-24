@@ -1,6 +1,6 @@
 package org.mitlware.problem.tsp;
 
-import org.mitlware.support.io.DirectoryListing;
+import org.mitlware.support.util.DirectoryListing;
 import org.mitlware.support.lang.BadFormatException;
 import org.mitlware.support.lang.Diag;
 import org.mitlware.support.lang.UnsupportedFormatException;
