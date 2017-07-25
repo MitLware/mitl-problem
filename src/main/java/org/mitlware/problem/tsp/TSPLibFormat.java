@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import org.mitlware.support.lang.BadFormatException;
-import org.mitlware.support.lang.Diag;
+import org.mitlware.Diag;
 import org.mitlware.support.lang.UnsupportedFormatException;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;

@@ -1,8 +1,10 @@
 package org.mitlware.problem.tsp;
 
+import org.mitlware.Diag;
+
 import org.mitlware.support.util.DirectoryListing;
 import org.mitlware.support.lang.BadFormatException;
-import org.mitlware.support.lang.Diag;
+
 import org.mitlware.support.lang.UnsupportedFormatException;
 import org.mitlware.support.math.Vec2;
 import org.junit.Test;
@@ -123,15 +125,15 @@ public class TestTSP {
 		TSPLibFormat tsp = TSPLibFormat.read( new FileInputStream(input) );
 		String expected = readFileToString(input,java.nio.charset.StandardCharsets.UTF_8).replaceAll("[\n\t ]","");
 		Optional<String> actual = tsp.toTSPLibFormat().map( s -> s.replaceAll("[\n\t ]","") );
-//		org.mitlware.support.lang.Diag.println( "comparingStrings" );
+//		Diag.println( "comparingStrings" );
 //compareStrings(Optional.of(expected.toString()).toString(),actual.toString());
-//org.mitlware.support.lang.Diag.println( "comparedStrings" );
+//Diag.println( "comparedStrings" );
 		assertEquals(Optional.of(expected),actual);
 	}
 	
 	@Test	
 	public void testReadWriteTSPLib() throws IOException, BadFormatException {
-		org.mitlware.support.lang.Diag.println( new Date() );		
+		Diag.println( new Date() );		
 		String path = System.getProperty( "user.dir" ) + "/resources/" + "unitTest.tsp";
 		testReadWriteTSPLibImpl(new File(path));
 	}
