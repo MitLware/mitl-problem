@@ -114,17 +114,5 @@ public final class DIMACSFormat {
 		
 		return new CNF( numVariables, clauses );
 	} 
-
-	///////////////////////////////
 	
-	public static void main( String[] argv ) 
-	throws FileNotFoundException, IOException, BadDIMACSFormatException 
-	{ 
-		// String fileName = "resources/sat/unif-c500-v250-s453695930.cnf";		
-		String fileName = "resources/sat/simple_v3_c2.cnf";
-		CNF cnf = readDIMACS( DIMACSFormat.class.getResourceAsStream( fileName ) );
-		//CNF cnf = readDIMACS( new FileInputStream( fileName ) );
-		System.out.println( cnf );
-		System.out.println( "All done." );
-	} 
 } 

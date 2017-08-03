@@ -69,7 +69,7 @@ public final class MatrixIndexing {
 				m.set( i, j, value );
 	}
 	
-	public static void main( String [] args ) {
+/*	public static void main( String [] args ) {
 		
 		final int dim = 4;
 		
@@ -95,6 +95,7 @@ public final class MatrixIndexing {
 		
 		System.out.println( "lower: " + lower );
 	}
+*/
 }
 
 // End ///////////////////////////////////////////////////////////////
