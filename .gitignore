@@ -6,3 +6,4 @@ target/
 .classpath
 .idea
 Problemos.iml
+/bin/
