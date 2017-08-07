@@ -402,7 +402,7 @@ public final class BitVectorProblems {
 		
 		private static int hiffImpl( BitVector x ) {
 			
-			assert( !isPositivePowerOf2( x.length() ) );
+			assert( isPositivePowerOf2( x.length() ) );
 			
 			if( x.length() == 1 )
 				// return 1;
