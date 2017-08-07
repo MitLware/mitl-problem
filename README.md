@@ -1,12 +1,6 @@
 # MitL-problems 
 
-This library describes some general problem classes, for instance:
-- BitVector problems (i.e. the Checkerboard Probem, the Royal Road problem),
-- TSP,
-- TTP,
-- SAT
-
-//TODO
+Example problem domains (TSP,SAT,numeric,n-puzzle etc), defined in terms of the org.mitlware interfaces (Perturb, Evaluate etc).
 
 ## Getting Started
 
@@ -24,15 +18,7 @@ If you want to use an IDE rather than running everything from the command line, 
 
 ### Installing
 
-You can get a copy this repository by downloading the zip folder, or by typing:
-
-```
-git clone https://github.com/drdrwhite/mitlproblems.git
-```
-
-in the command line.
-
-Once that's done, you can either work directly from the terminal, or using and an IDE. These instructions present how to run the library using IntelliJ and Eclipse.
+Once you have this repository downloaded, you can either work directly from the terminal, or using and an IDE. These instructions present how to run the library using IntelliJ and Eclipse.
 
 ### IntelliJ
 
@@ -42,13 +28,8 @@ Select **Create New Project** on the Welcome screen, or select **File | New | Pr
 
 Choose **Scala** -> **SBT** as the project type and click **Next**.
 
-![alt text][img1.png]
-![alt text][https://github.com/drdrwhite/mitlproblems/img/img1.png]
-
 Specify project and module location settings.
 Depending on your operating system, a **Use auto-import** opion might apper. If it does, check the box to allow auto-import. Otherwise, you'll have to refresh the IDE every time you edit sbt build - related files.
-
-//TODO image
 
 You can alternatively import an existing sbt project, if you already ran sbt on the source files.
 
@@ -70,26 +51,24 @@ If you are unable to run ```sbt eclipse```, see <https://github.com/typesafehub/
 
 ## Running the tests
 
-Tests can be found in the [mitlproblems/src/test/java/org/mitlware/problem](https://github.com/drdrwhite/mitlproblems/tree/master/src/test/java/org/mitlware/problem) directory.
+Tests can be found in the [mitl-solutions/src/test/java/org/mitlware/problem](https://github.com/drdrwhite/mitlproblems/tree/master/src/test/java/org/mitlware/problem) directory.
 
-You can run all the tests at once by running ```sbt`` in the terminal, and then typing ```test```, or a particular test with ```sbt``` > ```testOnly *NameOfTestClass```.
+### sbt
+You can run all the tests at once by running ```sbt``` in the terminal, and then typing ```test```, or a particular test with ```sbt``` > ```testOnly *NameOfTestClass```.
 
-## Deployment
+### IntelliJ
 
-//TODO Add additional notes about how to deploy this on a live system
+### Eclipse
+Run tests by right-clicking on the ```src/tests/java``` package or a chosen test class and selecting **Run As...** > **JUnit test**. If you choose to run tests using a custom Run Configuration, make sure to use JUnit **4** - the tests won't run with JUnit 3, which might be set as default.
 
 ## Built With
 
 * [sbt](http://www.scala-sbt.org/) - Scala Build Tool
 * [Maven](https://maven.apache.org/) - Dependency Management
 
-//TODO
-
 ## Contributing
 
 Please read [CONTRIBUTING.md](https://github.com/drdrwhite/mitlproblems/CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
-
-//TODO add text to CONTRIBUTING.md
 
 ## Versioning
 
@@ -97,8 +76,13 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 ## Authors
 
-* **Jerry Swan** - *Initial work* - []()
-* **David White** - - []()
+* Steven Adriaensen
+* Alexander E. I. Brownlee
+* Pablo García Sánchez 
+* Ahmed Kheiri
+* Faustyna Krawiec
+* Markus Wagner
+* David R. White
 
 See <http://www.mitlware.org/> for more infromation on the project.
 
@@ -111,12 +95,4 @@ See also the list of [collaborators](https://github.com/drdrwhite/mitlproblems/C
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
-## Acknowledgments
-
-//TODO:
-* Hat tip to anyone who's code was used
-* Inspiration
-* etc
-
-[img1]: [[linkToRepo]/img/img1.] "Choose project type"
 [linkToRepo]: https://github.com/drdrwhite/mitlproblems
