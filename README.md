@@ -46,7 +46,7 @@ If you are unable to run ```sbt eclipse```, see <https://github.com/typesafehub/
 
 ## Running the tests
 
-Tests can be found in the [/problem](mitl-solutions/src/test/java/org/mitlware/problem) directory.
+Tests can be found in the [/problem](mitlproblems/src/test/java/org/mitlware/problem) directory.
 
 ### sbt
 You can run all the tests at once by running ```sbt``` in the terminal, and then typing ```test```, or a particular test with ```sbt``` > ```testOnly *NameOfTestClass```.
