@@ -1,4 +1,4 @@
-# MitL-problems 
+# MitL-problem
 
 Example problem domains (TSP,SAT,numeric,n-puzzle etc), defined in terms of the org.mitlware interfaces (Perturb, Evaluate etc).
 
@@ -33,8 +33,8 @@ Depending on your operating system, a **Use auto-import** opion might apper. If 
 Once you download [Scala IDE for eclipse](http://scala-ide.org/download/sdk.html) and have sbt installed, you should be able to run ```sbt eclipse``` in the command line, in the project's root directory (.../mitlproblems). The output of the command should look similar to this:
 
 ```
-[info] Loading project definition from /Users/username/MitL/mitlproblems/project
-[info] Set current project to MitLware-problems (in build file:/Users/username/MitL/mitlproblems/)
+[info] Loading project definition from /Users/username/MitL/mitlproblem/project
+[info] Set current project to MitLware-problems (in build file:/Users/username/MitL/mitlproblem/)
 [info] About to create Eclipse project files for your project(s).
 [info] Successfully created Eclipse project files for project(s):
 [info] MitLware-problems
