@@ -68,6 +68,7 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 ## Authors
 
+* Jerry Swan
 * Steven Adriaensen
 * Alexander E. I. Brownlee
 * Pablo García Sánchez 
