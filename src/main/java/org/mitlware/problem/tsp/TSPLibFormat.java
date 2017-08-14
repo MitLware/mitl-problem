@@ -17,6 +17,7 @@ import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import java.util.Scanner;
 
 import org.mitlware.support.lang.BadFormatException;
 import org.mitlware.Diag;
@@ -25,8 +26,6 @@ import org.mitlware.support.lang.UnsupportedFormatException;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.apache.commons.lang3.tuple.Pair;
-
-import cformat.ScanfReader;
 
 //////////////////////////////////////////////////////////////////////
 
@@ -423,15 +422,15 @@ public final class TSPLibFormat {
 					// isEOF = true;
 					// break;
 					// }
-						
-					ScanfReader scanf = new ScanfReader( new StringReader( line ) );
 					
-					final int nodeId = scanf.scanInt();
+					Scanner scanner = new Scanner(line);
+					scanner.useDelimiter("[^\\p{Alnum},\\.-]");
+					
+					final int nodeId = scanner.nextInt();
 					if( nodeId == -1 )
 						break;
 					
 					depotNodes.add( nodeId );
-					scanf.close();
 				}	
 				
 				symbolTable.add( Pair.of("DEPOT_SECTION", depotNodes ) );
