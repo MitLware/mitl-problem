@@ -64,7 +64,7 @@ Run tests by right-clicking on the ```src/tests/java``` package or a chosen test
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](tags). 
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/MitLware/mitl-problem/releases). 
 
 ## Authors
 
